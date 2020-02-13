@@ -18,15 +18,18 @@ Quebrador (byte *entrada, byte *saida, unsigned tamanho)
 	if(!saida)
 		return saidaNull;
 
-	unsigned indice,auxiliar;
+	unsigned indice,auxiliar,temporario;
 	byte segredo;
 
 	for (indice=0;indice!=tamanho;indice++)
 		saida[indice]=0;
-	
-	for (segredo=0;auxiliar!=indice;segredo++)
+		
+	auxiliar=0;
+	/*H,N*/
+	for (segredo='O';segredo!=177;segredo++)
 	{
-		for(indice=0;(indice!=tamanho);indice++)
+		auxiliar=0;
+		for(indice=0;indice!=tamanho;indice++)
 		{
 			saida[indice]=entrada[indice]^segredo;
 			if ((saida[indice]>=' ')&&(saida[indice]<='~'))
@@ -37,6 +40,14 @@ Quebrador (byte *entrada, byte *saida, unsigned tamanho)
 					auxiliar++;
 				}
 			}
+		}
+		if (auxiliar==indice)
+		{
+			printf ("\nPara o Segredo:%c\t",segredo);
+			printf ("Saida:");
+			for (temporario=0;temporario!=indice;temporario++)
+				printf("%c",saida[temporario]);
+			printf ("\n");
 		}
 	}
 
