@@ -1,0 +1,264 @@
+=head2 Tue Nov 26 18:02:32 2019: C<Module> L<Clone::Choose|Clone::Choose>
+
+=over 4
+
+=item *
+
+C<installed into: /Users/manoel.junior/github/perl-course/dia5/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.010>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Tue Nov 26 18:02:32 2019: C<Module> L<Hash::Merge|Hash::Merge>
+
+=over 4
+
+=item *
+
+C<installed into: /Users/manoel.junior/github/perl-course/dia5/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.300>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Tue Nov 26 18:02:35 2019: C<Module> L<Class::Method::Modifiers|Class::Method::Modifiers>
+
+=over 4
+
+=item *
+
+C<installed into: /Users/manoel.junior/github/perl-course/dia5/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 2.13>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Tue Nov 26 18:02:37 2019: C<Module> L<Sub::Quote|Sub::Quote>
+
+=over 4
+
+=item *
+
+C<installed into: /Users/manoel.junior/github/perl-course/dia5/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 2.006006>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Tue Nov 26 18:02:38 2019: C<Module> L<Role::Tiny|Role::Tiny>
+
+=over 4
+
+=item *
+
+C<installed into: /Users/manoel.junior/github/perl-course/dia5/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 2.001004>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Tue Nov 26 18:02:42 2019: C<Module> L<JSON::PP|JSON::PP>
+
+=over 4
+
+=item *
+
+C<installed into: /Users/manoel.junior/github/perl-course/dia5/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 4.04>
+
+=item *
+
+C<EXE_FILES: bin/json_pp>
+
+=back
+
+=head2 Tue Nov 26 18:02:43 2019: C<Module> L<CPAN::Meta|CPAN::Meta>
+
+=over 4
+
+=item *
+
+C<installed into: /Users/manoel.junior/github/perl-course/dia5/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 2.150010>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Tue Nov 26 18:02:45 2019: C<Module> L<Moo|Moo>
+
+=over 4
+
+=item *
+
+C<installed into: /Users/manoel.junior/github/perl-course/dia5/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 2.003006>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Tue Nov 26 18:02:47 2019: C<Module> L<MRO::Compat|MRO::Compat>
+
+=over 4
+
+=item *
+
+C<installed into: /Users/manoel.junior/github/perl-course/dia5/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.13>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Tue Nov 26 18:02:48 2019: C<Module> L<SQL::Abstract|SQL::Abstract>
+
+=over 4
+
+=item *
+
+C<installed into: /Users/manoel.junior/github/perl-course/dia5/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.86>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Tue Nov 26 18:02:56 2019: C<Module> L<DBI|DBI>
+
+=over 4
+
+=item *
+
+C<installed into: /Users/manoel.junior/github/perl-course/dia5/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.642>
+
+=item *
+
+C<EXE_FILES: dbilogstrip dbiprof dbiproxy>
+
+=back
+
+=head2 Tue Nov 26 18:02:58 2019: C<Module> L<Devel::CheckLib|Devel::CheckLib>
+
+=over 4
+
+=item *
+
+C<installed into: /Users/manoel.junior/github/perl-course/dia5/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.14>
+
+=item *
+
+C<EXE_FILES: bin/use-devel-checklib>
+
+=back
+

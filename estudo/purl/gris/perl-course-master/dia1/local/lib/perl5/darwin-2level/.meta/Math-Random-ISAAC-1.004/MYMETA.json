@@ -1,0 +1,48 @@
+{
+   "abstract" : "Perl interface to the ISAAC PRNG algorithm",
+   "author" : [
+      "Jonathan Yu <jawnsy@cpan.org>"
+   ],
+   "dynamic_config" : 0,
+   "generated_by" : "Dist::Zilla version 4.200003, CPAN::Meta::Converter version 2.102400, CPAN::Meta::Converter version 2.150010",
+   "license" : [
+      "unrestricted"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : 2
+   },
+   "name" : "Math-Random-ISAAC",
+   "prereqs" : {
+      "build" : {
+         "requires" : {
+            "Test::More" : "0.62",
+            "Test::NoWarnings" : "0.084"
+         }
+      },
+      "configure" : {
+         "requires" : {
+            "ExtUtils::MakeMaker" : "6.31"
+         }
+      },
+      "runtime" : {
+         "recommends" : {
+            "Math::Random::ISAAC::XS" : "0"
+         },
+         "requires" : {}
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "http://rt.cpan.org/NoAuth/Bugs.html?Dist=Math-Random-ISAAC"
+      },
+      "homepage" : "http://search.cpan.org/dist/Math-Random-ISAAC",
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/jawnsy/Math-Random-ISAAC.git"
+      }
+   },
+   "version" : "1.004",
+   "x_serialization_backend" : "JSON::PP version 2.97001"
+}

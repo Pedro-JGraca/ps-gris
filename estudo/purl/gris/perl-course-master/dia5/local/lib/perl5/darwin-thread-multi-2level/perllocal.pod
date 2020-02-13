@@ -1,0 +1,44 @@
+=head2 Tue Nov 26 14:45:23 2019: C<Module> L<List::Util|List::Util>
+
+=over 4
+
+=item *
+
+C<installed into: /Users/manoel.junior/github/perl-course/dia5/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.53>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Tue Nov 26 14:45:27 2019: C<Module> L<Mojolicious|Mojolicious>
+
+=over 4
+
+=item *
+
+C<installed into: /Users/manoel.junior/github/perl-course/dia5/local/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 8.26>
+
+=item *
+
+C<EXE_FILES: script/hypnotoad script/mojo script/morbo>
+
+=back
+

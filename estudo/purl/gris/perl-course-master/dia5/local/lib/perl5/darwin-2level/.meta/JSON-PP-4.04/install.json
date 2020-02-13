@@ -1,0 +1,1 @@
+{"version":4.04,"pathname":"I/IS/ISHIGAKI/JSON-PP-4.04.tar.gz","name":"JSON::PP","provides":{"JSON::PP":{"version":4.04,"file":"lib/JSON/PP.pm"},"JSON::PP::IncrParser":{"version":4.04,"file":"lib/JSON/PP.pm"},"JSON::PP::Boolean":{"file":"lib/JSON/PP/Boolean.pm","version":4.04}},"target":"JSON::PP","dist":"JSON-PP-4.04"}

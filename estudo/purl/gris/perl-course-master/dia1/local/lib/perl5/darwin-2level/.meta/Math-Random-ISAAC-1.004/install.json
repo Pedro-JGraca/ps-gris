@@ -1,0 +1,1 @@
+{"target":"Math::Random::ISAAC","version":1.004,"name":"Math::Random::ISAAC","dist":"Math-Random-ISAAC-1.004","provides":{"Math::Random::ISAAC::PP":{"file":"lib/Math/Random/ISAAC/PP.pm","version":1.004},"Math::Random::ISAAC":{"version":1.004,"file":"lib/Math/Random/ISAAC.pm"}},"pathname":"J/JA/JAWNSY/Math-Random-ISAAC-1.004.tar.gz"}

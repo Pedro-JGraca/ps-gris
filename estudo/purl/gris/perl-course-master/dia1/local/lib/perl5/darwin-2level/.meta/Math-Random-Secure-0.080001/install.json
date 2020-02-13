@@ -1,0 +1,1 @@
+{"target":"Math::Random::Secure","version":0.080001,"name":"Math::Random::Secure","dist":"Math-Random-Secure-0.080001","provides":{"Math::Random::Secure":{"file":"lib/Math/Random/Secure.pm","version":0.080001},"Math::Random::Secure::RNG":{"file":"lib/Math/Random/Secure/RNG.pm","version":0.080001}},"pathname":"F/FR/FREW/Math-Random-Secure-0.080001.tar.gz"}

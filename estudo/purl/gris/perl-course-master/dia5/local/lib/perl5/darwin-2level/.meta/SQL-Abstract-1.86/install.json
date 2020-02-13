@@ -1,0 +1,1 @@
+{"name":"SQL::Abstract","pathname":"I/IL/ILMARI/SQL-Abstract-1.86.tar.gz","version":1.86,"dist":"SQL-Abstract-1.86","target":"SQL::Abstract","provides":{"SQL::Abstract":{"file":"lib/SQL/Abstract.pm","version":1.86},"SQL::Abstract::Tree":{"file":"lib/SQL/Abstract/Tree.pm"},"SQL::Abstract::Test":{"file":"lib/SQL/Abstract/Test.pm"}}}

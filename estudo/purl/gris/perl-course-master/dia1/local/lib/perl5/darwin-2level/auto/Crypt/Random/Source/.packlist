@@ -1,0 +1,11 @@
+/Users/manoel.junior/github/perl-course/dia1/local/lib/perl5/Crypt/Random/Source.pm
+/Users/manoel.junior/github/perl-course/dia1/local/lib/perl5/Crypt/Random/Source/Base.pm
+/Users/manoel.junior/github/perl-course/dia1/local/lib/perl5/Crypt/Random/Source/Base/File.pm
+/Users/manoel.junior/github/perl-course/dia1/local/lib/perl5/Crypt/Random/Source/Base/Handle.pm
+/Users/manoel.junior/github/perl-course/dia1/local/lib/perl5/Crypt/Random/Source/Base/Proc.pm
+/Users/manoel.junior/github/perl-course/dia1/local/lib/perl5/Crypt/Random/Source/Base/RandomDevice.pm
+/Users/manoel.junior/github/perl-course/dia1/local/lib/perl5/Crypt/Random/Source/Factory.pm
+/Users/manoel.junior/github/perl-course/dia1/local/lib/perl5/Crypt/Random/Source/Strong.pm
+/Users/manoel.junior/github/perl-course/dia1/local/lib/perl5/Crypt/Random/Source/Strong/devrandom.pm
+/Users/manoel.junior/github/perl-course/dia1/local/lib/perl5/Crypt/Random/Source/Weak.pm
+/Users/manoel.junior/github/perl-course/dia1/local/lib/perl5/Crypt/Random/Source/Weak/devurandom.pm
