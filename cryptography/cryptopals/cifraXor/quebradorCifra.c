@@ -33,13 +33,9 @@ Quebrador (byte *entrada, byte *saida, unsigned tamanho)
 		{
 			saida[indice]=entrada[indice]^segredo;
 			if ((saida[indice]>=' ')&&(saida[indice]<='~'))
-			{
 				if (saida[indice]!=95)
-				{
 					/*é um caracter desejado*/
 					auxiliar++;
-				}
-			}
 		}
 		if (auxiliar==indice)
 		{
