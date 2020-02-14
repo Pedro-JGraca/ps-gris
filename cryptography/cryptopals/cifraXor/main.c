@@ -79,6 +79,10 @@ main (int argc, char **argv)
 	}
 /*fim da construcao do buffer*/
 
+	printf ("\nPara Entrada:");
+	for (indice =0;indice!=(auxiliar/2);indice++)
+		printf("%c", buffer[indice]);
+	printf ("\n");
 
 /*usando a funcao*/	
 	validador=Quebrador (buffer, encoding, auxiliar/2);
@@ -101,14 +105,7 @@ main (int argc, char **argv)
 		}
 	}
 	
-	printf ("\nQuebrou com sucesso");
-	printf ("\nPara a Entrada:\t%s\t\tA resposta e:\t%s\n", buffer, encoding);
-
-	printf ("\n");
-	for (indice=0;indice!=auxiliar/2;indice++)
-		printf("Indice:%u\tEntrada:%c\tSaida:%c\n",indice,buffer[indice],encoding[indice]);
-
-	printf ("\n\n");	
+	printf ("\nQuebrou com sucesso\n");
 	
 	free(buffer);
 	free(encoding);

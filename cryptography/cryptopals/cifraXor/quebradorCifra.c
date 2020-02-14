@@ -32,7 +32,7 @@ Quebrador (byte *entrada, byte *saida, unsigned tamanho)
 		for(indice=0;indice!=tamanho;indice++)
 		{
 			saida[indice]=entrada[indice]^segredo;
-			if ((saida[indice]>=' ')&&(saida[indice]<='~'))
+			if (((saida[indice]>='A')&&(saida[indice]<='z'))||((saida[indice]==' ')||(saida[indice]=='\'')))
 				if (saida[indice]!=95)
 					/*é um caracter desejado*/
 					auxiliar++;
