@@ -22,20 +22,25 @@ Quebrador (byte *entrada, byte *saida, unsigned tamanho)
 	byte segredo;
 
 	for (indice=0;indice!=tamanho;indice++)
-		saida[indice]=0;
+		saida[indice]=0; /*preenche em zero a saida*/
 		
 	auxiliar=0;
-	/*H,N*/
-	for (segredo='O';segredo!=177;segredo++)
+	
+	for (segredo=0;segredo!=255;segredo++)
 	{
 		auxiliar=0;
 		for(indice=0;indice!=tamanho;indice++)
 		{
 			saida[indice]=entrada[indice]^segredo;
-			if (((saida[indice]>='A')&&(saida[indice]<='z'))||((saida[indice]==' ')||(saida[indice]=='\'')))
+			if (((saida[indice]>='A')&&(saida[indice]<='z'))||(((saida[indice]==' ')||(saida[indice]=='\'')))) 
+			{
 				if (saida[indice]!=95)
-					/*é um caracter desejado*/
+					/*nao é um caracter desejado*/
 					auxiliar++;
+			}
+			else
+				indice=tamanho-1;
+		
 		}
 		if (auxiliar==indice)
 		{
