@@ -20,7 +20,7 @@ Xozador (byte *entrada1,byte *entrada2, byte *saida, unsigned tamanho)
 
 	unsigned indice;
 	
-	for(indice=0;indice<tamanho;indice++) /*faz ate o chegar o ultimo conjunto de seguimentos e o ultimo caso este seja 3*/
+	for(indice=0;indice<tamanho;indice++) 
 		saida[indice]=entrada1[indice]^entrada2[indice];
 
 	saida[indice]=EOS;
