@@ -3,51 +3,50 @@ package main
 import (
 	"fmt"
 	"net"
+	"sync"
 )
 
-func scaner(IP string,porta int, abriu *bool) error {
+type MultiWorker struct {
+	wg sync.WaitGroup
+}
+
+
+func (w *MultiWorker) Run(IP string, porta int, abriu bool) {
+
+	fmt.Print("Diga o IP: ")
+	fmt.Scanln(&IP)
+	for i := 0;i<2;i++ {
+		w.wg.Add(1)
+		fmt.Print("Diga a porta do IP: ")
+		fmt.Scanln(&porta)
+		go scaner(w,IP,porta,&abriu)
+	}
+	w.wg.Wait()
+}
+
+func scaner(w *MultiWorker,IP string,porta int, abriu *bool) error {
 	address := fmt.Sprintf ("%s:%d", IP, porta)
 	conn, err := net.Dial ("tcp", address)
+	defer w.wg.Done()
 	if err != nil {
 		*abriu = false
-		return err
+	} else {
+		*abriu = true
+		conn.Close()
 	}
-	conn.Close()
-	*abriu = true
-	return nil
+	if *abriu == true {
+		fmt.Printf("\nA batida em: %s:%d retornou: OPEN\n",IP,porta)
+	} else {
+		fmt.Printf("\nA batida em: %s:%d retornou: CLOSED\n",IP,porta)
+	}
+	return err
 }
 
 func main() {
+	w := &MultiWorker{}
+	var IP string
+	var porta int
+	var abriu bool
+	w.Run(IP, porta, abriu)
 
-	var IP1 string
-	var porta1 int
-	var IP2 string
-	var porta2 int
-	var abriu1 bool
-	var abriu2 bool
-
-	fmt.Print("Diga primeiro IP: ")
-	fmt.Scanln(&IP1)
-	fmt.Print("Diga a porta do primeiro IP: ")
-	fmt.Scanln(&porta1)
-	fmt.Print("Diga segundo IP: ")
-	fmt.Scanln(&IP2)
-	fmt.Print("Diga a porta do segundo IP: ")
-	fmt.Scanln(&porta2)
-
-
-	scaner(IP1,porta1,&abriu1)
-	scaner(IP2,porta2,&abriu2)
-
-	if abriu1 == true {
-		fmt.Printf("\nA primeira batida em: %s:%d retornou: OPEN\n",IP1,porta1)
-	} else {
-		fmt.Printf("\nA primeira batida em: %s:%d retornou: CLOSED\n",IP1,porta1)
-	}
-
-	if abriu2 == true {
-		fmt.Printf("\nA Segunda batida em: %s:%d retornou: OPEN\n\n",IP2,porta2)
-	} else {
-		fmt.Printf("\nA Segunda batida em: %s:%d retornou: CLOSED\n\n",IP2,porta2)
-	}
 }
