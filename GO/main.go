@@ -1,13 +1,23 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"net"
+)
+
+func scaner(IP string,porta int) error {
+	address := fmt.Sprintf ("%s:%d"IP, porta)
+	conn, err := net.Dial ("tcp", adress)
+	if err != nil {
+		fmt.Printf
+}
 
 func main() {
 
 	var IP1 string
-	var porta1 string
+	var porta1 int
 	var IP2 string
-	var porta2 string
+	var porta2 int
 	var abriu1 bool
 	var abriu2 bool
 
@@ -20,8 +30,8 @@ func main() {
 	fmt.Print("Diga a porta do segundo IP: ")
 	fmt.Scanln(&porta2)
 
-	abriu1 = false
-	abriu2 = true
+
+
 
 	if abriu1 == true {
 		fmt.Printf("\nA primeira batida em: %s:%s retornou: OPEN\n",IP1,porta1)
