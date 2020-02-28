@@ -9,7 +9,10 @@ func scaner(IP string,porta int) error {
 	address := fmt.Sprintf ("%s:%d"IP, porta)
 	conn, err := net.Dial ("tcp", adress)
 	if err != nil {
-		fmt.Printf
+		fmt.Printf("Falha na conhexao com %s: %s\n" ,address, err.Error())
+		return err
+	}
+	return nil
 }
 
 func main() {
