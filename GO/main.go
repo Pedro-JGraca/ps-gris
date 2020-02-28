@@ -5,14 +5,15 @@ import (
 	"net"
 )
 
-func scaner(IP string,porta int) error {
-	address := fmt.Sprintf ("%s:%d"IP, porta)
-	conn, err := net.Dial ("tcp", adress)
+func scaner(IP string,porta int) bool {
+	address := fmt.Sprintf ("%s:%d", IP, porta)
+	conn, err := net.Dial ("tcp", address)
 	if err != nil {
-		fmt.Printf("Falha na conhexao com %s: %s\n" ,address, err.Error())
-		return err
+//		fmt.Printf("Falha na conhexao com %s: %s\n" ,address, err.Error())
+		return false
 	}
-	return nil
+	conn.Close()
+	return true
 }
 
 func main() {
@@ -34,8 +35,8 @@ func main() {
 	fmt.Scanln(&porta2)
 
 
-	go abriu1 := scan(IP1,porta1)
-	go abriu2 := scan(IP2,porta2)
+	abriu1 = scaner(IP1,porta1)
+	abriu2 = scaner(IP2,porta2)
 
 	if abriu1 == true {
 		fmt.Printf("\nA primeira batida em: %s:%s retornou: OPEN\n",IP1,porta1)
