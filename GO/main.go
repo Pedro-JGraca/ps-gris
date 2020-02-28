@@ -34,7 +34,8 @@ func main() {
 	fmt.Scanln(&porta2)
 
 
-
+	go abriu1 := scan(IP1,porta1)
+	go abriu2 := scan(IP2,porta2)
 
 	if abriu1 == true {
 		fmt.Printf("\nA primeira batida em: %s:%s retornou: OPEN\n",IP1,porta1)
