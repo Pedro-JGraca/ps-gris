@@ -1,0 +1,8 @@
+create database pSgris
+
+A tabela Palestrantes existe para conter os dados de todos os palestrantes que deram aula no PS-GRIS. Eles tem ID (e não cpf) pela possibilidade de um dia vir algum que não seja Brasileiro, diminuindo burocracias.
+Todo avaliador é palestrante, mas nem todo palestrante é avaliador, assim, no lugar de criar uma tabela nova, apenas um campo do tipo enum é o suficente.
+A tabela TAG existe pq um mesmo palestrante pode ter várias tags, mas uma tag sempre tem um palestrante. Isso justifica a chave estrangeira nela.
+A tabela Avaliados é a que contem o grupo de pessoas que estão fazendo parte do processo seletivo, como o gris é um grupo da UFRJ, o DRE basta para identifica-los.
+A tabela NOTAS existe para ligar as tagas e os alunos. Assim uma tag x de um aluno y tem a nota z. Por meio de chavez extrangeiras podemos fazer isso.
+Por fim temos a tabela ouvinte que existe apenas para guardar os dados de alunos que não estão concorrendo, podendo ser de fora da UFRJ. Isso é importante para ter um controle de quem tem assistido o que.
