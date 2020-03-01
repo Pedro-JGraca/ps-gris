@@ -4,7 +4,7 @@ default collate utf8_general_ci;
 
 use pSgris;
 
-create table PALESTRANTES 
+create table PALESTRANTES
 (
 	id_palestrante					Tinyint(2) NOT NULL AUTO_INCREMENT,
 	nome										Varchar(50) NOT NULL,
@@ -22,7 +22,8 @@ create table TAG
 	id_tag									Tinyint(2) NOT NULL AUTO_INCREMENT,
 	aula										Varchar(20) NOT NULL,
 	data_entrega						Date  NOT NULL,
-	CONSTRAINT fk_id_palestrante FOREIGN KEY (id_palestrante) REFERENCES PALESTRANTES (id_palestrante)
+	id_palestrante					Tinyint(2) NOT NULL,
+	CONSTRAINT fk_id_palestrante FOREIGN KEY (id_palestrante) REFERENCES PALESTRANTES (id_palestrante),
 	PRIMARY KEY (id_tag)
 )
 ENGINE=innoDB
@@ -43,10 +44,12 @@ DEFAULT CHARSET = utf8;
 
 create table NOTAS 
 (
-	id_notas								Tinyint(3) NOT NULL AUTO_INCREMENT,
-	CONSTRAINT fk_dre_avaliados FOREIGN KEY (dre) REFERENCES AVALIADOS (dre)
-	CONSTRAINT fk_id_tag FOREIGN KEY (id_tag) REFERENCES TAG (id_tag)
+	id_notas								Tinyint(3) NOT NULL,
+	dre_avaliado						Char(9) NOT NULL,
+	id_tag									Tinyint(2) NOT NULL,
 	notas										Decimal(3,2) NOT NULL,
+	CONSTRAINT fk_id_tag FOREIGN KEY (id_tag) REFERENCES TAG (id_tag),
+	CONSTRAINT fk_dre_avaliados FOREIGN KEY (dre_avaliado) REFERENCES AVALIADOS (dre),
 	PRIMARY KEY (id_notas)
 )
 ENGINE=innoDB
