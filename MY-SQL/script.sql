@@ -1,28 +1,37 @@
-create database pSgris;
-use pSgris;
-create table AVALIADORES (
-	id											Tinyint(2),
-	palestrante							Varchar(50),
-	aula										Varchar(20),
-	possui_tag 							Bit
-);
+create database pSgris
+default character set utf8
+default collate utf8_general_ci;
 
-create table TAG (				
-	aula										Varchar(20),
-	data_entrega						Decimal 
-);
+use pSgris;
+
+create table AVALIADORES (
+	id_palestrante					Tinyint(2) NOT NULL AUTO_INCREMENT,
+	palestrante							Varchar(50) NOT NULL,
+	aula										Varchar(20) NOT NULL,
+	PRIMARY KEY (id_palestrante)
+)DEFAULT CHARSET = utf8;
+
+create table TAG (
+	id_tag									Tinyint(2) NOT NULL AUTO_INCREMENT,
+	aula										Varchar(20) NOT NULL,
+	data_entrega						Date  NOT NULL,
+	PRIMARY KEY (id_tag)
+)DEFAULT CHARSET = utf8;
 
 create table AVALIADOS (
-	nome										Varchar(50),
-	dre											Char(9),
-	curso										Varchar(50),
-	data_nascimento			  	Decimal,
-	periodo									TinyInt(2)
-);
+	id_avaliado							Tinyint(3) NOT NULL AUTO_INCREMENT,
+	nome										Varchar(50) NOT NULL,
+	dre											Char(9) NOT NULL,
+	curso										Varchar(50) NOT NULL,
+	data_nascimento			  	Date NOT NULL,
+	periodo									TinyInt(2) NOT NULL,
+	PRIMARY KEY (id_avaliado)
+)DEFAULT CHARSET = utf8;
 
 create table OUVINTES (
-	nome										Varchar(50),
+	id_ouvinte							Tinyint(2) NOT NULL AUTO_INCREMENT,
+	nome										Varchar(50) NOT NULL,
 	intituicao_de_origem		Varchar(50),
-	ano_nascimento					Decimal
-)
-
+	ano_nascimento					Date NOT NULL,
+	PRIMARY KEY (id_ouvinte)
+)DEFAULT CHARSET = utf8;
