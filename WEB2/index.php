@@ -11,10 +11,13 @@
 			<input type="submit"/>
 		</form>
 		<?php 
-			
-			$output= shell_exec("wget ".$_POST["link"]);
-				
-			if ($output!=0)
+			$file_name = basename ($_POST["link"]);
+
+			if (file_put_contents($file_name, file_get_contents($_POST["link"])))
+			{
+				echo "<h5>fez download </h5>";
+			}
+			else
 			{
 			 echo "<h5> nao fez download </h5>";
 			}
