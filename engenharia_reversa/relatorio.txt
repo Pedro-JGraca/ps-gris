@@ -1,0 +1,3 @@
+O que está dentro da pasta Por_diretorio é o programa que não funciona onde vc passaria a pasta de arquivos e ele resolveria todos por voce.
+O que está dentro da pasta Por_Arquivo é o programa que funciona, onde basicamente vc passa o arquivo encriptografado .leo e ele retorna o arquivo original
+para instalar basta executar o comando: make descriptoArq
