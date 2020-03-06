@@ -6,21 +6,93 @@
 	</head>
 	<body>
  		<form method="POST">
-			<h5> arquivo </h5>
+			<h5> coloque aqui seu arquivo texto </h5>
+			<h2> nao serao permitidos codigos de programacao ou binario</h2>
 			<input type="text" name="link"/>
 			<input type="submit"/>
 		</form>
 		<?php 
-			$file_name = basename ($_POST["link"]);
+			$dir= "./";
+			$url = $_POST["link"];
+			$ch = curl_init($url); 
 
-			if (file_put_contents($file_name, file_get_contents($_POST["link"])))
+			if (!is_dir($dir))
 			{
-				echo "<h5>fez download </h5>";
+				echo "<h5>diretorio com erro</h5>";
 			}
+			if (!is_writable($dir))
+			{
+				echo "<h5>diretorio nao escrivivel</h5>";
+			}
+			
+			$file_name=basename($url);
+			if($file_name==$url)
+			{
+				echo "nao fez download";
+			}
+			
 			else
 			{
-			 echo "<h5> nao fez download </h5>";
+				$save_file_loc = $dir . $file_name;
+
+				$fp = fopen ( $save_file_loc,'wb');
+
+				curl_setopt($ch, CURLOPT_FILE, $fp);
+				curl_setopt($ch, CURLOPT_HEADER, 0);
+
+				curl_exec($ch);
+				curl_close($ch);
+	
+				fclose ($fp);
+				
+				if(verifica($save_file_loc, $dir)==1)
+				{
+					echo "<h2>codigo de programacao ou binario!</h2>";
+				}
+				else
+				{
+					echo "<h5>tudo certo<h5>";
+					$fp = fopen ( $save_file_loc,'wb');
+
+					curl_setopt($ch, CURLOPT_FILE, $fp);
+					curl_setopt($ch, CURLOPT_HEADER, 0);
+
+					curl_exec($ch);
+					curl_close($ch);
+	
+					fclose ($fp);	
+				}
+			
 			}
+
+		function verifica ($save_file_loc)
+		{
+			$arquivo = file_get_contents($save_file_loc);
+			$tamanho = strlen($arquivo);
+			for ($i=0;$i!= $tamanho ;$i++)
+			{
+				if (($arquivo[$i]< ' ') or (($arquivo[$i]> 'z')))
+				{
+					fclose ($fp);
+					unlink ($save_file_loc);
+					return 1;
+				}
+			}
+			/*$fp = fopen ( $save_file_loc, 'r')
+			for ()
+			{
+				if (($letra < '') or ($letra > 'z'))
+				{
+					fclose ($fp);
+					unlink ($save_file_loc);
+					return 1;
+				}
+			}
+			fclose ($fp);*/
+			unlink ($save_file_loc);
+			return 0; //nao e codigo de programacao
+		}
+
 
 		?>
 	</body>
