@@ -19,8 +19,8 @@ int
 main (int argc, char **argv)
 {
 	unsigned char buffer [COMPRIMENTO_BUFFER], key;
-	unsigned qntdArquivos, auxiliar;
-	char *command,*linha, *origem, *destino;
+	unsigned qntdArquivos, auxiliar, indice;
+	char *command,*linha, *origem, *destino, *movendo;
 	tipoErros validador;
 	FILE *arquivo, *aberto, *escrevendo;
 	size_t lidos;
@@ -79,21 +79,22 @@ main (int argc, char **argv)
 	}
 	origem = malloc (sizeof(char *)*600);
 	destino = malloc (sizeof(char *)*600);
-	strcat (command , "/");
-	strcat (argv[1],"/");
-	strcpy (origem, "./");
-	strcat (origem, argv[1]);
-	strcpy (destino, command);
+	movendo = malloc (sizeof(char *)*600);
+
+	sprintf (origem,"cp %s/*.leo ./",argv[1]);
+	system (origem);
+
 	while ((fgets(linha,TAMANHO_MAXIMO_LINHA,arquivo))!=NULL)
 	{
-		strcat (origem,linha);
-		strcat (destino,linha);
+		strcpy (origem,linha);
+		for (indice=0;((origem[indice]!='.')||(origem[indice+1]!='l'));indice++)
+			destino[indice]=origem[indice];
 
-/*falta tirar o .leo*/
 		printf ("\n\nOrigem: %s\nDestino: %s\n\n", origem, destino);
-		aberto = fopen (origem,"r");
+		aberto = fopen (origem, "r");
 		if (aberto==NULL)
 		{
+			printf ("\nnao abriu %s\n", origem);
 			printfErro (arquivoNULL);
 			exit (arquivoNULL);
 		}
@@ -105,12 +106,17 @@ main (int argc, char **argv)
 				buffer[auxiliar]-=key;
 			fwrite (buffer,COMPRIMENTO_BUFFER,lidos,escrevendo);
 		}
+		sprintf(H,"mv %s %s", destino,command);
+		system (movendo);
 		fclose (aberto);
 		fclose (escrevendo);
 	}
 	fclose (arquivo);
 
 	free (linha);
+	
+	system ("rm *.leo");
+	system ("rm arquivos.txt");
 	return ok;
 }
 

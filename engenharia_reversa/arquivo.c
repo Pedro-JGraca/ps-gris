@@ -79,8 +79,8 @@ achadorKEY (unsigned char *key)
 	
 	if (fgets(letra,2,ler)==NULL)
 		return sem_saida_ler;
-	*key = atoi (letra);
-	
+	*key = atoi (letra);	
+	system ("rm ./key");
 	return ok;
 
 }
