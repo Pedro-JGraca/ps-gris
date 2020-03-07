@@ -53,7 +53,7 @@
 				{
 					echo "<h5>tudo certo<h5>";
 					$fp = fopen ( $save_file_loc,'wb');
-
+					$ch = curl_init($url);
 					curl_setopt($ch, CURLOPT_FILE, $fp);
 					curl_setopt($ch, CURLOPT_HEADER, 0);
 
@@ -62,33 +62,27 @@
 	
 					fclose ($fp);	
 				}
-			
+		
 			}
 
 		function verifica ($save_file_loc)
 		{
-			$arquivo = file_get_contents($save_file_loc);
-			$tamanho = strlen($arquivo);
-			for ($i=0;$i!= $tamanho ;$i++)
+			$fp = fopen ( $save_file_loc,'r');
+			while ($linha= fgets($fp,4096))	
 			{
-				if (($arquivo[$i]< ' ') or (($arquivo[$i]> 'z')))
+				$tamanho=strlen($linha);
+				$tamanho--;
+				for ($i=0;$i!==$tamanho;$i++)
 				{
-					fclose ($fp);
-					unlink ($save_file_loc);
-					return 1;
-				}
+					if (($linha[$i]<' ') or ($linha[$i]>'z'))
+					{
+						fclose ($fp);
+						unlink ($save_file_loc);
+						return 1;
+					}
+				}	
 			}
-			/*$fp = fopen ( $save_file_loc, 'r')
-			for ()
-			{
-				if (($letra < '') or ($letra > 'z'))
-				{
-					fclose ($fp);
-					unlink ($save_file_loc);
-					return 1;
-				}
-			}
-			fclose ($fp);*/
+			fclose ($fp);
 			unlink ($save_file_loc);
 			return 0; //nao e codigo de programacao
 		}
