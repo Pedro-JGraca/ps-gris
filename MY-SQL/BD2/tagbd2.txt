@@ -1,0 +1,39 @@
+
+
+Alterei o script criando um banco de dados e mandando ele usar este.
+Você pode ver essa alteração no script .sql que eu dexei (onde busquei o meu) (apaguei tudo depois da linha 40 para deixar leve).
+
+1) O total de compras foram 50000.
+	para achar usei: 
+		use PedroGraca;
+		select * from compra;
+
+2) ada.
+	para achar usei:
+		use PedroGraca;
+		select * from fregueses order by nome;
+			quando listei observei que a "ada", que estava em segundo lugar na ordenação, tinha nascido após 1990.
+
+3) jasmin.
+	para achar usei:
+		select * from fregueses order by data_nasc;
+
+4) CAMISA West Conshohocke 1993, cuja nota foi 10 e o valor é  10.12.
+	para achar usei: 
+		select nota from `avaliacao produto` group by nota;
+ 			aqui verifiquei que as notas possiveis variam de 1 a 10.
+ 		select produto,item,nota,preco from produto g join `avaliacao produto` a on g.idproduto = a.produto where nota=10 order by preco desc;
+
+5) 
+	para achar usei: 
+
+	select vendedor, avg(nota) from `avaliacao vendedor` group by vendedor order by avg(nota);
+	-> retorna notas médias por vendedor.
+	select produto, count(idCompra) from compra group by produto order by count(idCompra);
+	-> retorna quantidade de vzs que o produtor foi vendido.
+
+	select vendedor, idproduto from produto order by vendedor;
+	->retorna produtos por vendedor
+
+
+
