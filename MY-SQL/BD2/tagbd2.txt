@@ -24,7 +24,18 @@ Você pode ver essa alteração no script .sql que eu dexei (onde busquei o meu)
  			aqui verifiquei que as notas possiveis variam de 1 a 10.
  		select produto,item,nota,preco from produto g join `avaliacao produto` a on g.idproduto = a.produto where nota=10 order by preco desc;
 
-5) 
+5)
+	o vendedor de id 28 vendeu 99 itens (o que mais vendo) e teve uma nota média de 5.6768, ficando em 339 lugar.
+	o vendedor de id 452 vendeu 97 itens e teve uma nota média de 5.7732, ficando em 253 lugar.
+
+	o vendedor de id 337 vendeu 95 itens e teve uma nota média de 5.4, ficando em 594 lugar.
+	
+	o vendedor de id 733 vendeu 95 itens e teve uma nota média de 5.4286, ficando em 567 lugar.
+	
+	o vendedor de id 235 vendeu 91 itens e teve uma nota média de 5.4615, ficando em lugar 541.
+	
+	o vendedor de id 271 vendeu 91 itens e e teve uma nota média de 5.4066, ficando em 586 lugar.
+	
 	para achar usei: 
 
 	select vendedor, avg(nota) from `avaliacao vendedor` group by vendedor order by avg(nota);
