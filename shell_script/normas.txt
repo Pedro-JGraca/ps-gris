@@ -1,0 +1,2 @@
+A ideia é vocês criarem um script com funções e flags para fazer backups de diretórios.
+os backups devem gerar arquivos com datas (yyyymmdd) e o script deve apagar backups com mais de 3 dias.
