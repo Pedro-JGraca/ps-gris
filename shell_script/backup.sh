@@ -59,6 +59,20 @@ function EscolhaDoUsuario() {
 	done
 }
 
+function RemoveDiretorioAntigo() {
+	ls /home/$DIR/BACKUP 1>>a.txt
+	for line in $(cat a.txt);do 
+	numero=${line//$DIR/""}
+	numero=${numero//.*/""}
+	APAGAR=$[DATA-3]
+	if [ $numero -lt $APAGAR ]; then 
+		sudo rm /home/$DIR/BACKUP/$line
+	else
+		sleep 0s
+	fi;done
+	sudo rm a.txt
+}
+
 sudo -n echo senhada 2>>a.txt 1>>a.txt
 SUDO=$?
 if [ $SUDO -eq 0 ]; then
@@ -74,7 +88,9 @@ if [ $SUDO -eq 0 ]; then
 	else
 		mkdir /home/$DIR/BACKUP
 	fi
-	nome=$DIR$DATA
+	sudo rm a.txt
+	NOME=$DIR$DATA
+	RemoveDiretorioAntigo
 	echo $NOME
 	#main
 else
