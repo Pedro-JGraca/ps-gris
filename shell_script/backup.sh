@@ -92,6 +92,10 @@ if [ $SUDO -eq 0 ]; then
 	NOME=$DIR$DATA
 	RemoveDiretorioAntigo
 	echo $NOME
+	#precisa perguntar se quer -czf ou -cjf
+	#precisa criar flag para criar empacotar um diretorio
+	#cria um tar da home. sudo tar -czf $NOME.tar.gz /home/$DIR
+	#sudo mv $NOME.tar.gz /home/$DIR/BACKUP/
 	#main
 else
 	rm a.txt
