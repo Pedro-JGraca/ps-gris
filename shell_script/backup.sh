@@ -1,7 +1,20 @@
 #!/bin/bash
 function VerificaUsuario() {
-
-	SAIDA=1 #1 usuario nao existe, 0 usuario existe
+	a=0
+	TEM=0
+	while [ $a != $i ]; do
+		if [ $DIR == ${USUARIO[$a]} ];then
+			TEM=1
+			a=$[a+1]
+		else
+			a=$[a+1]
+		fi
+	done
+	if [ $TEM -eq 1 ]; then
+		SAIDA=0 #o o usuario exite
+	else
+		SAIDA=1 #1 usuario nao existe
+	fi
 }
 
 function EscolhaDoUsuario() {
@@ -22,9 +35,13 @@ function EscolhaDoUsuario() {
 				if [ "$line" == "$P" ]; then
 					sleep 0s
 				else
-					USUARIO[$i]=$line
-					echo ${USUARIO[$i]}
-					i=$[i+1]
+					if [ "$line" == "root" ]; then
+						sleep 0s
+					else
+						USUARIO[$i]=$line
+						echo ${USUARIO[$i]}
+						i=$[i+1]
+					fi
 				fi
 			fi;done
 		sudo rm a.txt
@@ -45,12 +62,21 @@ function EscolhaDoUsuario() {
 sudo -n echo senhada 2>>a.txt 1>>a.txt
 SUDO=$?
 if [ $SUDO -eq 0 ]; then
+	#main
 	sudo rm a.txt
 	date -I >>a.txt
 	for line in $(cat a.txt);do DATA=$line;done
 	DATA=${DATA//-/""}
 	EscolhaDoUsuario
-	echo $DIR
+	ls /home/$DIR/BACKUP 1>>a.txt 2>>a.txt
+	if [ $? -eq 0 ];then
+		sleep 0s
+	else
+		mkdir /home/$DIR/BACKUP
+	fi
+	nome=$DIR$DATA
+	echo $NOME
+	#main
 else
 	rm a.txt
 	echo "esse script precisa ser executado com sudo."
