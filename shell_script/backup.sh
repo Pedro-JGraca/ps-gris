@@ -65,6 +65,7 @@ function RemoveDiretorioAntigo() {
 	numero=${line//$DIR/""}
 	numero=${numero//.*/""}
 	APAGAR=$[DATA-3]
+	#tag
 	if [ $numero -lt $APAGAR ]; then 
 		sudo rm /home/$DIR/BACKUP/$line
 	else
@@ -73,34 +74,118 @@ function RemoveDiretorioAntigo() {
 	sudo rm a.txt
 }
 
+function VerificaSeExiste () {
+	ls 1>>a.txt
+	EXISTE=0
+	for line in $(cat a.txt);do 
+	echo $line $2
+	if [ "$line" == "$2" ]; then
+		EXISTE=1
+	fi;done
+	rm a.txt
+}
+
+#main
 sudo -n echo senhada 2>>a.txt 1>>a.txt
 SUDO=$?
 if [ $SUDO -eq 0 ]; then
-	#main
 	sudo rm a.txt
 	date -I >>a.txt
 	for line in $(cat a.txt);do DATA=$line;done
-	DATA=${DATA//-/""}
+	DATA=${DATA//-/""} #tira os -
 	EscolhaDoUsuario
+	
 	ls /home/$DIR/BACKUP 1>>a.txt 2>>a.txt
 	if [ $? -eq 0 ];then
-		sleep 0s
+		sleep 0s #zuera para nao fazer nada
 	else
 		mkdir /home/$DIR/BACKUP
 	fi
 	sudo rm a.txt
+	
 	NOME=$DIR$DATA
 	RemoveDiretorioAntigo
-	echo $NOME
-	#precisa perguntar se quer -czf ou -cjf
-	#precisa criar flag para criar empacotar um diretorio
-	#cria um tar da home. sudo tar -czf $NOME.tar.gz /home/$DIR
-	#sudo mv $NOME.tar.gz /home/$DIR/BACKUP/
-	#main
-else
+	
+	if [ $# -ne 0 ]; then
+		case $1 in
+		"-g")
+				echo criando $NOME.tar.gz
+				sudo tar -czf $NOME.tar.gz /home/$DIR 2>>a.txt
+				sudo mv $NOME.tar.gz /home/$DIR/BACKUP/
+				sudo rm a.txt
+				echo criado $NOME.tar.gz/;;
+		"-e")if [ $# -ne 2 ]; then
+					echo voce precisa informar o diretorio
+				else
+					echo por favor nao use sudo para isso.
+				fi;;
+		*)echo por favor coloque alguma flag aceitavel;;
+		esac
+	else #default
+		echo criando $NOME.tar.bz2
+		sudo tar -cjf $NOME.tar.bz2 /home/$DIR 2>>a.txt
+		sudo mv $NOME.tar.bz2 /home/$DIR/BACKUP/
+		rm a.txt
+		echo criado $NOME.tar.bz2
+	fi
+else #se nao tem senha
 	rm a.txt
-	echo "esse script precisa ser executado com sudo."
-	echo "por favor coloque sudo antes de exexcuta-lo"
+	if [ $# -ne 0 ]; then
+		case $1 in
+		"-g")
+				echo "esse script precisa ser executado com sudo."
+				echo "por favor coloque sudo antes de exexcuta-lo";;
+		"-e")if [ $# -ne 2 ]; then
+					echo voce precisa informar o diretorio/arquivo
+				else
+					mkdir ./BACKUP-ESPECIAL
+					VerificaSeExiste
+					if [ $EXISTE -eq 1 ]; then
+						echo criando $2.tar.bz2
+						tar -cjj $2.tar.bz2 $2 2>>a.txt
+						mv $2 ./BACKUP-ESPECIAL/
+						echo criando $2.tar.bz2
+						rm a.txt
+					else
+						echo nao existe $2 no arquivo
+					fi
+				fi;;
+		"-eg")if [ $# -ne 2 ]; then
+					echo voce precisa informar o diretorio/arquivo
+				else
+					mkdir ./BACKUP-ESPECIAL
+					VerificaSeExiste
+					if [ $EXISTE -eq 1 ]; then
+						echo criando $2.tar.gz
+						tar -cfz $2.tar.gz $2 2>>a.txt
+						mv $2 ./BACKUP-ESPECIAL/
+						echo criado $2.tar.gz
+						rm a.txt
+					else
+						echo nao existe $2 no arquivo	
+					fi
+				fi;;
+		"-ge")if [ $# -ne 2 ]; then
+					echo voce precisa informar o diretorio/arquivo
+				else
+					mkdir ./BACKUP-ESPECIAL
+					VerificaSeExiste
+					if [ $EXISTE -eq 1 ]; then
+						echo criando $2.tar.bz2
+						tar -cfz $2.tar.gz $2 2>>a.txt
+						mv $2 ./BACKUP-ESPECIAL/
+						echo criado $2.tar.gz
+						rm a.txt
+					else
+						echo nao existe $2 no arquivo
+					fi
+				fi;;
+		*)echo por favor coloque alguma flag aceitavel;;
+		esac
+	else	
+		echo "esse script precisa ser executado com sudo."
+		echo "por favor coloque sudo antes de exexcuta-lo"
+	fi
 fi
-
-
+#exit
+#main
