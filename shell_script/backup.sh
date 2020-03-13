@@ -60,14 +60,14 @@ function EscolhaDoUsuario() {
 }
 
 function RemoveDiretorioAntigo() {
-	ls /home/$DIR/BACKUP 1>>a.txt
+	ls /home/BACKUP 1>>a.txt
 	for line in $(cat a.txt);do 
 	numero=${line//$DIR/""}
 	numero=${numero//.*/""}
 	APAGAR=$[DATA-3]
 	#tag
 	if [ $numero -lt $APAGAR ]; then 
-		sudo rm /home/$DIR/BACKUP/$line
+		sudo rm /home/BACKUP/$line
 	else
 		sleep 0s
 	fi;done
@@ -77,11 +77,17 @@ function RemoveDiretorioAntigo() {
 function VerificaSeExiste () {
 	ls 1>>a.txt
 	EXISTE=0
+	NtemBac=1
 	for line in $(cat a.txt);do 
-	echo $line $2
-	if [ "$line" == "$2" ]; then
-		EXISTE=1
+		if [ "$line" == "BACKUP-ESPECIAL" ];then
+			NtemBac=0
+		fi
+		if [ "$line" == "$ESP" ]; then
+			EXISTE=1
 	fi;done
+	if [ $NtemBac -eq 1 ];then
+		mkdir ./BACKUP-ESPECIAL
+	fi
 	rm a.txt
 }
 
@@ -95,11 +101,11 @@ if [ $SUDO -eq 0 ]; then
 	DATA=${DATA//-/""} #tira os -
 	EscolhaDoUsuario
 	
-	ls /home/$DIR/BACKUP 1>>a.txt 2>>a.txt
+	ls /home/BACKUP 1>>a.txt 2>>a.txt
 	if [ $? -eq 0 ];then
 		sleep 0s #zuera para nao fazer nada
 	else
-		mkdir /home/$DIR/BACKUP
+		mkdir /home/BACKUP
 	fi
 	sudo rm a.txt
 	
@@ -111,7 +117,7 @@ if [ $SUDO -eq 0 ]; then
 		"-g")
 				echo criando $NOME.tar.gz
 				sudo tar -czf $NOME.tar.gz /home/$DIR 2>>a.txt
-				sudo mv $NOME.tar.gz /home/$DIR/BACKUP/
+				sudo mv $NOME.tar.gz /home/BACKUP/
 				sudo rm a.txt
 				echo criado $NOME.tar.gz/;;
 		"-e")if [ $# -ne 2 ]; then
@@ -124,10 +130,11 @@ if [ $SUDO -eq 0 ]; then
 	else #default
 		echo criando $NOME.tar.bz2
 		sudo tar -cjf $NOME.tar.bz2 /home/$DIR 2>>a.txt
-		sudo mv $NOME.tar.bz2 /home/$DIR/BACKUP/
+		sudo mv $NOME.tar.bz2 /home/BACKUP/
 		rm a.txt
 		echo criado $NOME.tar.bz2
 	fi
+
 else #se nao tem senha
 	rm a.txt
 	if [ $# -ne 0 ]; then
@@ -138,13 +145,13 @@ else #se nao tem senha
 		"-e")if [ $# -ne 2 ]; then
 					echo voce precisa informar o diretorio/arquivo
 				else
-					mkdir ./BACKUP-ESPECIAL
+					ESP=$2
 					VerificaSeExiste
 					if [ $EXISTE -eq 1 ]; then
 						echo criando $2.tar.bz2
-						tar -cjj $2.tar.bz2 $2 2>>a.txt
-						mv $2 ./BACKUP-ESPECIAL/
-						echo criando $2.tar.bz2
+						tar -cjf $2.tar.bz2 $2 2>>a.txt
+						mv $2.tar.bz2 ./BACKUP-ESPECIAL/
+						echo criado $2.tar.bz2
 						rm a.txt
 					else
 						echo nao existe $2 no arquivo
@@ -153,13 +160,13 @@ else #se nao tem senha
 		"-eg")if [ $# -ne 2 ]; then
 					echo voce precisa informar o diretorio/arquivo
 				else
-					mkdir ./BACKUP-ESPECIAL
+					ESP=$2
 					VerificaSeExiste
 					if [ $EXISTE -eq 1 ]; then
 						echo criando $2.tar.gz
-						tar -cfz $2.tar.gz $2 2>>a.txt
-						mv $2 ./BACKUP-ESPECIAL/
+						tar -czf $2.tar.gz $2 2>>a.txt
 						echo criado $2.tar.gz
+						mv $2.tar.gz ./BACKUP-ESPECIAL/
 						rm a.txt
 					else
 						echo nao existe $2 no arquivo	
@@ -168,13 +175,13 @@ else #se nao tem senha
 		"-ge")if [ $# -ne 2 ]; then
 					echo voce precisa informar o diretorio/arquivo
 				else
-					mkdir ./BACKUP-ESPECIAL
+					ESP=$2
 					VerificaSeExiste
 					if [ $EXISTE -eq 1 ]; then
-						echo criando $2.tar.bz2
-						tar -cfz $2.tar.gz $2 2>>a.txt
-						mv $2 ./BACKUP-ESPECIAL/
+						echo criando $2.tar.gz
+						tar -czf $2.tar.gz $2 2>>a.txt
 						echo criado $2.tar.gz
+						mv $2.tar.gz ./BACKUP-ESPECIAL/
 						rm a.txt
 					else
 						echo nao existe $2 no arquivo
@@ -182,10 +189,12 @@ else #se nao tem senha
 				fi;;
 		*)echo por favor coloque alguma flag aceitavel;;
 		esac
+		
 	else	
 		echo "esse script precisa ser executado com sudo."
 		echo "por favor coloque sudo antes de exexcuta-lo"
 	fi
+
 fi
 #exit
 #main
