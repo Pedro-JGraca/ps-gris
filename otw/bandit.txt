@@ -61,9 +61,9 @@ Bandit9:
 	Senha: UsvVyFSfZZWbi6wgC7dAFyFuR6jQQUhR
 
 Bandit10:
-	para achar usei: 
+	para achar usei: xxd data.txt | grep -A2 ========
 
-	Senha: 
+	Senha: truKLdjsbJ5g7yyJ2X2R0o3a5HQJFuLk 
 
 Bandit11:
 	para achar usei: 
