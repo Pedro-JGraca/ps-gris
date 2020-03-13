@@ -1,0 +1,116 @@
+Bandit0:
+	para entrar usei:
+		ssh bandit0@bandit.labs.overthewire.org -p2220
+	
+	Senha: bandit0
+
+Bandit1:
+	para achar usei: 
+		cat readme
+	
+	Senha: boJ9jbbUNNfktd78OOpsqOltutMc3MY1
+
+Bandit2:
+	para achar usei: 
+		cat ./-
+	
+	Senha: CV1DtqXWVFXTvM2F0k09SHz0YwRINYA9
+
+Bandit3:
+	para achar usei: 
+		cat ./spaces\ in\ this\ filename 
+	
+	Senha: UmHadQclWmgdLOKQ3YNgjWxGoRMb5luK
+
+Bandit4:
+	para achar usei: 
+		cat inhere/.hidden
+	
+	Senha: pIwrPrtPN36QITSp3EQaw936yaFoFgAB
+
+Bandit5:
+	para achar usei: 
+		cat ./inhere/-file0*
+	
+	Senha: koReBOKuIDDepwhWk7jZC0RTdopnAYKh
+
+Bandit6:
+	para achar usei: 
+		ls -la maybehere??/ | grep -B7 1033 #com isso descobri a pasta
+		cat maybehere07/.file2
+
+		Senha: DXjZPULLxYr17uwoI01bNLQbtFemEgo7
+
+Bandit7:
+	para achar usei: 
+	ls -lRa / 2>>/dev/null | grep -B50 bandit7 | grep -B50 bandit6 | grep -B50 33
+	cat /var/lib/dpkg/info/bandit7.password
+	
+	Senha: HKBPTKQnIay4Fw76bEy8PVxKEDQRKTzs
+
+Bandit8:
+	para achar usei: 
+	cat data.txt | grep millionth
+
+	Senha: cvX2JJa4CFALtqS87jk27qwqGhBM9plV
+
+Bandit9:
+	para achar usei: 
+	sort data.txt | uniq -u 
+
+	Senha: UsvVyFSfZZWbi6wgC7dAFyFuR6jQQUhR
+
+Bandit10:
+	para achar usei: 
+
+	Senha: 
+
+Bandit11:
+	para achar usei: 
+
+	Senha: 
+
+Bandit12:
+	para achar usei: 
+
+	Senha: 
+
+Bandit13:
+	para achar usei: 
+
+	Senha: 
+
+Bandit14:
+	para achar usei: 
+
+	Senha: 
+
+Bandit15:
+	para achar usei: 
+
+	Senha: 
+
+Bandit16:
+	para achar usei: 
+
+	Senha: 
+
+Bandit17:
+	para achar usei: 
+
+	Senha: 
+
+Bandit18:
+	para achar usei: 
+
+	Senha: 
+
+Bandit19:
+	para achar usei: 
+
+	Senha: 
+
+Bandit20:
+	para achar usei: 
+
+	Senha: 
