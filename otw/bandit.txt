@@ -80,8 +80,26 @@ Bandit12:
 
 Bandit13:
 	para achar usei: 
+		mkdir /tmp/oiii
+		mv ./data.txt /tmp/oiii
+		cd /tmp/oiii
+		xxd -r data.txt 1>>oi.gz
+		gzip -d oi.gz
+		mv oi oi.bz2
+		bzip2 -d oi.bz2
+		mv oi oi.tar
+		tar -xvf oi.tar
+		mv data5.bin data5.tar
+		tar -xvf data5.tar
+		mv data6.bin data6.bz2
+		bzip2 -d data6.bz2
+		mv data6 data6.tar
+		tar -xvf data6.tar 
+		mv data8.bin data8.gz 
+		gzip -d data8.gz
+		cat data8
 
-	Senha: 
+	Senha: 8ZjyCRiBWFYkneahHwxCv3wb2a1ORpYL
 
 Bandit14:
 	para achar usei: 
