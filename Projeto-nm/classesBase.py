@@ -471,16 +471,18 @@ class ALU:
         else:
             self.paridade = 0
         
-#a = ALU(0,8)
+a = ALU(0,8)
 
 #print(a.A)
 
-#a.setClk(True)
-#a.setA([1,1,0,1,0,0,1,1])
-#a.setB([0,1,1,1,0,0,0,1])
-#print(a.A)
-#print(a.B)
-#a.decide([1,1,1,1])
+a.setClk(True)
+a.setA([0,1,0,1,0,0,1,1])
+a.setB([1,1,1,1,0,0,0,1])
+print(a.A)
+print(a.B)
+print(25*'-')
+a.decide([1,0,0,1])
 
-#print(a.SOUT)
-#print(a.Cout)
+print(a.SOUT)
+print(a.Cout)
+print(a.Borrow)
