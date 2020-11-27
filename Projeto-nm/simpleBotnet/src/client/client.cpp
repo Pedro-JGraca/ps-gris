@@ -5,12 +5,21 @@
 #include "requests.h"
 
 typedef enum 
-opcao{op_openShell,op_sendfile,op_writefile,
-        op_execute,op_install,op_run,op_nop} options;
+opcao
+{
+    op_openShell,
+    op_sendfile,
+    op_writefile,
+    op_execute,
+    op_install,
+    op_run,
+    op_nop
+} options;
 
 using namespace std;
 
-options cmd2Enum( string& cmd )
+options 
+cmd2Enum( string& cmd )
 {
     options result=op_nop;
     vector<string> cmds={"openShell","sendfile","writefile","execute","install","run","nop"};
@@ -24,7 +33,9 @@ options cmd2Enum( string& cmd )
     return result ;
 }
 
-int main(){
+int 
+main()
+{
     httpManager manager;
     
     manager.makeRegister();

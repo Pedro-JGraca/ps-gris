@@ -15,10 +15,11 @@ class client:
         self.result=result
 
     def getCmd(self):
-        #self.cvcmd.acquire()
+        self.cvcmd.acquire()
+
         while self.cmd==None:
-            time.sleep(1)
-        #    self.cvcmd.wait()
+        #    time.sleep(1)
+            self.cvcmd.wait()
         #consume cmd
         result=self.cmd
         self.lastcmd=result
@@ -29,6 +30,7 @@ class client:
     
     def getFile(self):
         self.cvfile.acquire()
+
         while self.file==None:
             self.cvfile.wait()
         #consume file
@@ -40,12 +42,12 @@ class client:
 
 
 
-    def setCmd(self,cmdList,fname=None):
+    def setCmd(self,cmdList):
 
-        self.cvcmd.acquire()
+        self.cvcmd.acquire() #interrupcao 
         #produce item
         self.cmd=cmdList
-        self.cvcmd.notify()
+        self.cvcmd.notify() #acorda wait
         self.cvcmd.release()
 
     def setFile(self,fname):
@@ -80,5 +82,6 @@ class client:
 
     def __str__(self):
         return f"uid: {self.uid} ip:{self.ip} activeCmd: {self.cmd} lastcmd: {self.lastcmd} lastreport: {self.result}"
+        
     def __repr__(self):
         return self.__str__()        

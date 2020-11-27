@@ -31,14 +31,10 @@ istream& operator>>( istream& is, commands& i ){
 }
 
 
-
-int main (int argc, char** argv) 
+int 
+main (int argc, char** argv) 
 {
-
-    
     manager adm;
-
-    
 
     cout << "[admin front started]"<< endl;
     commands command;

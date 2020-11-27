@@ -42,8 +42,9 @@ CURL *simpleCurl::getObject(){
     return curl;
 }
 
-string simpleCurl::simplePerform(const char * subpath,
-            long *statusCode=nullptr,const char **headers=nullptr,FILE *fp=nullptr){
+string 
+simpleCurl::simplePerform(const char * subpath, long *statusCode=nullptr,const char **headers=nullptr,FILE *fp=nullptr)
+{
     
     string result;
     

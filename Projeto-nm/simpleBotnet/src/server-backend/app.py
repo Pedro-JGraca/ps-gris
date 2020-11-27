@@ -80,8 +80,6 @@ def getFile():
     else:
         return "Error",404
 
-
-
 @app.route('/admin', methods=["POST"])
 def adminCmd():
     try:
@@ -131,17 +129,7 @@ def parseJsonPOST_RPC(json,master):
     
     return {"status":result},status_return
 
-verbose=False
-if not verbose:
-        #disables startup message lol
-        import sys
-        cli = sys.modules['flask.cli']
-        cli.show_server_banner = lambda *x: None
 
-        app.logger.disabled=True
-        log = logging.getLogger('werkzeug')
-        log.disabled = True
-
-app.run("0.0.0.0",port=8080,debug=verbose, use_reloader=False)
+app.run("0.0.0.0",port=8080, use_reloader=False)
 
 

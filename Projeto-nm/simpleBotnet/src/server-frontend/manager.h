@@ -59,9 +59,6 @@ public:
     FrontInstall(unsigned idCliente);
     void
     runCommand(string cmd,unsigned idCliente);
-
-
-
 };
 
 

@@ -14,8 +14,7 @@ class admin:
             print("exception ocurred!",e)
             return False
         
-
-
+    
     #RPCS CALLS
     def displayClients(self):
         print("[python]displaying clientes!!")
@@ -49,20 +48,4 @@ class admin:
         json={"CMD":"runCommand","cmdString":cmd,"uid":uid}
         self.doRequest(json)
 
-    
-
 master=admin()
-
-
-def test():
-    import time
-    a=admin()
-    while 1:
-        
-        a.displayClients()
-        time.sleep(4);
-        a.runCommand("ls -la")
-        #a.downloadFile("paimon.png")
-        time.sleep(4);
-if __name__=="__main__":
-    test()

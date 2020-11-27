@@ -52,7 +52,6 @@ public:
         }
 		p=_p;
 	}
-
 	
 	~CPyObject()
 	{
