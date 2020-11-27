@@ -74,7 +74,6 @@ class manager:
 
     ########################## actions RPC ############################
     def getClientByIndex(self,clientUid):
-        print("uid",clientUid)
         return list(self.clientList.items())[clientUid][1]
 
     def displayClients(self):
@@ -96,7 +95,8 @@ class manager:
             for uid in self.clientList:
                 self.clientList[uid].sendFile(fname)
         else:
-            if clientuid in self.clientList:
+            print("olha: " + str(self.clientList))
+            if clientuid in self.clientList.keys:
                 self.clientList[clientuid].sendFile(fname)
 
     def downloadFile(self,fname,clientuid=0):

@@ -63,8 +63,8 @@ while stayInProgram :
     
     elif (command == 2): #popShell
         try:
-            #if not (master.displayClients()):
-            #    raise master
+            if not (master.displayClients()):
+                raise master
 
             client = int(input("What client?"))
             print("\n")
@@ -80,8 +80,8 @@ while stayInProgram :
 
     elif (command == 3): #sendFile
         try:
-            #if not (master.displayClients()):
-            #    raise master
+            if not (master.displayClients()):
+                raise master
             
             client = int(input("What client?"))
             print("\n")
@@ -96,8 +96,8 @@ while stayInProgram :
 
     elif (command == 4): #reciveFile
         try:
-            #if not (master.displayClients()):
-            #    raise master
+            if not (master.displayClients()):
+                raise master
             
             client = int(input("What client?"))
             print("\n")
@@ -112,8 +112,8 @@ while stayInProgram :
 
     elif (command == 5): #execProgram
         try:
-            #if not (master.displayClients()):
-            #    raise master
+            if not (master.displayClients()):
+                raise master
             
             client = int(input("What client?"))
             print("\n")
@@ -128,8 +128,8 @@ while stayInProgram :
 
     elif (command == 6): #install
         try:
-            #if not (master.displayClients()):
-            #    raise master
+            if not (master.displayClients()):
+                raise master
             
             client = int(input("What client?"))
             print("\n")
@@ -142,8 +142,8 @@ while stayInProgram :
 
     elif (command == 7): #runComand
         try:
-            #if not (master.displayClients()):
-            #    raise master
+            if not (master.displayClients()):
+                raise master
             
             client = int(input("What client?"))
             print("\n")
@@ -175,3 +175,7 @@ while stayInProgram :
         wait = False
     else:
         print("Finish the program")
+
+
+#{listClients:ok,popShell:no,sendFile:no,reciveFile:no,execProgram:no,install:no,runComand:no,testServer:ok}
+#lC:ok,pS:no,sF:no,rF:no,eP:no,i:no,rC:no,tS:ok
