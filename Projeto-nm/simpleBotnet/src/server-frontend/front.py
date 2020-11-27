@@ -47,5 +47,3 @@ class admin:
         print("[python]run command!!",cmd,uid)
         json={"CMD":"runCommand","cmdString":cmd,"uid":uid}
         self.doRequest(json)
-
-master=admin()

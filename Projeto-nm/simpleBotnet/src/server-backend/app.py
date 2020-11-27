@@ -3,7 +3,7 @@
 from flask import Flask
 from flask import request, send_file, send_from_directory, safe_join, abort
 
-from myManager import manager,decodeJwt,encodeJwt,startServer
+from .myManager import manager,decodeJwt,encodeJwt,startServer
 #from killableThread import thread_with_trace
 #from myclient import client
 
