@@ -6,7 +6,7 @@ import os.path
 import base64
 import collections
 from threading import Thread
-from .myclient import client
+from myclient import client
 import logging
 import sys 
 

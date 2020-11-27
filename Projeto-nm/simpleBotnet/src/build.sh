@@ -8,7 +8,6 @@ rm -rf build/admin/*
 
 #builds client
 cd client
-make clean
 make
 mv client ../build/client/
 cd ..
@@ -20,11 +19,6 @@ cd ..
 
 #build admin
 cd server-frontend
-make clean
-make
-cp front.py ../build/admin/
-cp botnet ../build/admin/
-make clean
-
+cp *.py ../build/admin/
 cd ..
 

