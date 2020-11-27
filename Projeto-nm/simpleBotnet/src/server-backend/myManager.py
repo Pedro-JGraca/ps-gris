@@ -24,6 +24,8 @@ def decodeJwt(token):
     except jwt.exceptions.PyJWTError:
         return None,False
 
+
+#para que?
 def startServer(app,verbose=False):
     print("[SERVER] is is starting...")
     if not verbose:
