@@ -41,6 +41,7 @@ def startServer(app,verbose=False):
 class manager:
     def __init__(self):
         #UID->client
+        #self.new_uid='0'
         self.clientList=collections.OrderedDict()
         
 
@@ -49,9 +50,12 @@ class manager:
 
     def register(self,ip=""):
         new_uid=uuid.uuid4().hex
+
         c=client(new_uid,ip)
         self.clientList[new_uid]=c
         print("registrado",self.clientList)
+        #a = self.new_uid
+        #self.new_uid= str(int(self.new_uid)+1)
         return encodeJwt({"uid":new_uid}),True      
 
     def getCmd(self,uid):
@@ -95,9 +99,7 @@ class manager:
             for uid in self.clientList:
                 self.clientList[uid].sendFile(fname)
         else:
-            print("olha: " + str(self.clientList))
-            if clientuid in self.clientList.keys:
-                self.clientList[clientuid].sendFile(fname)
+            self.getClientByIndex(clientuid).sendFile(fname)
 
     def downloadFile(self,fname,clientuid=0):
         if clientuid==-1:
