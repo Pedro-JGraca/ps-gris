@@ -77,7 +77,6 @@ class manager:
         print("uid",clientUid)
         return list(self.clientList.items())[clientUid][1]
 
-    #all 6 requirements
     def displayClients(self):
         r ="displaying clients: \n"
         #print("dict client:",self.clientList)
@@ -132,6 +131,10 @@ class manager:
         else:
             if clientuid in self.clientList:
                 self.clientList[clientuid].runCommand(cmdList)
+    
+    def testServer(self):
+        return "server ok"
+
 
 
 

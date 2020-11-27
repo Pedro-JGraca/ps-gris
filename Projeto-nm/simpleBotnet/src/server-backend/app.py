@@ -2,6 +2,7 @@
 
 from flask import Flask
 from flask import request, send_file, send_from_directory, safe_join, abort
+import requests
 
 from myManager import manager,decodeJwt,encodeJwt,startServer
 #from killableThread import thread_with_trace
@@ -85,7 +86,8 @@ def adminCmd():
     try:
         return parseJsonPOST_RPC(request.json,master)
     except Exception as e:
-        print(e)
+        print('---------------------------------')
+        print("error in: " + str(e))
 
 
 ########################    HELPERS    #########################
@@ -124,6 +126,10 @@ def parseJsonPOST_RPC(json,master):
     elif(json["CMD"]=="runCommand"):
         print("RPC runCommand",json)
         result=master.runCommand(json["cmdString"],json["uid"])
+
+    elif (json["CMD"]=="testServer"):
+        print("RPC test server", json)
+        result=master.testServer()
     else:
         return {"status":"unkown"},401
     

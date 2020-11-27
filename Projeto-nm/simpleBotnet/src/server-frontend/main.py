@@ -4,7 +4,9 @@ from front import admin
 
 stayInProgram=True
 res=False
-commands = ['help','listClients','popShell', 'sendFile', 'reciveFile', 'execProgram', 'install','runComand','exit']
+commands = ['help','listClients','popShell', 'sendFile', 'reciveFile', 'execProgram', 'install','runComand', 'testServer','exit']
+
+exit = 9
 
 master=admin()
 
@@ -20,17 +22,18 @@ while stayInProgram :
         "5 - execProgram" +  "\n" +
         "6 - install"  + "\n" +
         "7 - runComand"  + "\n" +
-        "8 - exit"  + "\n"
+        "8 - testServer"  + "\n" +
+        "9 - exit"  + "\n"
     )
-    command = 8;
+    command = exit;
 
     try : 
         command = int(input('Enter the number of command:'))
-        if (command<0) or (command>8):
+        if (command<0) or (command>exit):
             raise command
     except:
         print("The input is not validated\n")
-        command = 8
+        command = exit
 
 
     print ("The command selected is: " + commands[command])
@@ -46,21 +49,22 @@ while stayInProgram :
         "5 - execProgram: executable runs on the client machine." + "\n\n" + 
         "6 - install: install client application on client." + "\n\n" + 
         "7 - runComand: run a command on the client machine."  + "\n\n" +
-        "8 - exit: disconnects of the server."  + "\n\n"
+        "8 - testServer: tests the connection to the server."  + "\n\n" +
+        "9 - exit: disconnects of the server."  + "\n"
     )
 
     elif (command == 1): #listClients
-        if(master.displayClients()):
-            print("Returned sucessfully")
-        else:
+        try:
+            if not (master.displayClients()):
+               raise master
+        except:
             print("Returned Error!!")
-        
 
     
     elif (command == 2): #popShell
         try:
-            #if not (master.displayClients()):
-            #    raise master
+            if not (master.displayClients()):
+                raise master
 
             client = int(input("What client?"))
             print("\n")
@@ -76,8 +80,8 @@ while stayInProgram :
 
     elif (command == 3): #sendFile
         try:
-            #if not (master.displayClients()):
-            #    raise master
+            if not (master.displayClients()):
+                raise master
             
             client = int(input("What client?"))
             print("\n")
@@ -92,8 +96,8 @@ while stayInProgram :
 
     elif (command == 4): #reciveFile
         try:
-            #if not (master.displayClients()):
-            #    raise master
+            if not (master.displayClients()):
+                raise master
             
             client = int(input("What client?"))
             print("\n")
@@ -108,8 +112,8 @@ while stayInProgram :
 
     elif (command == 5): #execProgram
         try:
-            #if not (master.displayClients()):
-            #    raise master
+            if not (master.displayClients()):
+                raise master
             
             client = int(input("What client?"))
             print("\n")
@@ -124,8 +128,8 @@ while stayInProgram :
 
     elif (command == 6): #install
         try:
-            #if not (master.displayClients()):
-            #    raise master
+            if not (master.displayClients()):
+                raise master
             
             client = int(input("What client?"))
             print("\n")
@@ -138,8 +142,8 @@ while stayInProgram :
 
     elif (command == 7): #runComand
         try:
-            #if not (master.displayClients()):
-            #    raise master
+            if not (master.displayClients()):
+                raise master
             
             client = int(input("What client?"))
             print("\n")
@@ -150,8 +154,15 @@ while stayInProgram :
                 raise master
         except:
             print("Returned Error!!")
+    
+    elif (command == 8): #testServer
+        try:
+            if not(master.testServer()):
+                raise master
+        except:
+            print("Returned Error!!")
 
-    elif (command == 8): #exit
+    elif (command == exit): #exit
         stayInProgram = False
         wait = False
     
@@ -164,3 +175,7 @@ while stayInProgram :
         wait = False
     else:
         print("Finish the program")
+
+
+#{listClients:ok,popShell:no,sendFile:no,reciveFile:no,execProgram:no,install:no,runComand:no,testServer:ok}
+#lC:ok,pS:no,sF:no,rF:no,eP:no,i:no,rC:no,tS:ok
