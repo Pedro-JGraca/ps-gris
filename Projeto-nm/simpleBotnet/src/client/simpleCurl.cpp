@@ -29,7 +29,7 @@ simpleCurl::getObject()
 }
 
 string 
-simpleCurl::simplePerform(const char * subpath, long *statusCode=nullptr,const char **headers=nullptr,FILE *fp=nullptr)
+simpleCurl::simplePerform(const char * subpath, long *statusCode=nullptr,const char **headers,FILE *fp)
 {
     
     string result;

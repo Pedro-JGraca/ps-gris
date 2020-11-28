@@ -17,7 +17,7 @@ class simpleCurl{
     public:
         simpleCurl();
         string simplePerform(const char * subpath,long *statusCode,
-                            const char **headers,FILE *fp);
+                            const char **headers=nullptr,FILE *fp=nullptr);
         CURL *getObject();
         ~simpleCurl();
 };

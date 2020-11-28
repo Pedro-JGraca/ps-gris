@@ -2,7 +2,8 @@
 #include <iostream>
 #include <vector>
 #include "dirtyModules.h"
-#include "requests.h"
+#include "httpManager.h"
+#include "simpleCurl.h"
 
 typedef enum 
 opcao

@@ -1,7 +1,7 @@
 #ifndef DIRTYMODULES_H
 #define DIRTYMODULES_H
 
-#include "requests.h"
+#include "httpManager.h"
 
 void openShell(commandInput cmd,httpManager &manager);
 
