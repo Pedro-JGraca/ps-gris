@@ -77,9 +77,6 @@ class client:
     
     def runCommand(self,args):
         self.setCmd(["run"]+args)
-    
-    def clientOK(self):
-        self.setCmd(["isOK"])
 
 
     def __eq__(self,other):

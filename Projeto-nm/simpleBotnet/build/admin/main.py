@@ -193,4 +193,4 @@ while stayInProgram :
 
 
 #{listClients:ok,popShell:no,sendFile:no,reciveFile:no,execProgram:no,install:no,runComand:no,testServer:ok,testeClient:no}
-#lC:ok,pS:n,sF:n,rF:n,eP:n,i:n,rC:n,tS:ok,tC:n
+#lC:ok,pS:no,sF:no,rF:no,eP:no,i:no,rC:no,tS:ok,tC:no

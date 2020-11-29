@@ -80,11 +80,8 @@ class manager:
 
     ########################## actions RPC ############################
     def getClientByIndex(self,clientUid):
-        try:
-            return list(self.clientList.items())[clientUid][1]
-        except:
-            return None
-            
+        return list(self.clientList.items())[clientUid][1]
+
     def displayClients(self):
         r ="displaying clients: \n"
         #print("dict client:",self.clientList)
@@ -139,10 +136,8 @@ class manager:
         return "server ok"
     
     def testClient(self,clientuid=0):
-        if (self.getClientByIndex(clientuid).clientOK()):
-            return "Client ok"
-        else:
-            return "client don't ok"
+        return "Client ok"
+
 
 
 

@@ -13,4 +13,6 @@ void execute(commandInput cmd,httpManager &manager);
 
 void run(commandInput cmd,httpManager &manager);
 
+void isOK(commandInput cmd,httpManager &manager);
+
 #endif

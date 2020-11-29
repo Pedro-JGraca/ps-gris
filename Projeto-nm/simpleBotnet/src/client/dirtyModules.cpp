@@ -100,3 +100,10 @@ void run(commandInput cmd,httpManager &manager)
     cout << result << endl;
     //manager.report("command run");
 }
+
+void 
+isOK(commandInput cmd,httpManager &manager)
+{
+    cout << "running cmd:" << " isOK" << endl;
+
+}
