@@ -81,6 +81,12 @@ def getFile():
     else:
         return "Error",404
 
+@app.route('/clientOk', methods=["POST"])
+def isOK():
+    uid,aproved=requireRegister()
+    master.getOK(uid)
+    return 'ok',200
+
 @app.route('/admin', methods=["POST"])
 def adminCmd():
     try:

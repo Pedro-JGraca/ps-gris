@@ -13,9 +13,6 @@ struct commandReport{
     int exitCode;
 };
 
-struct commandInput{
-    vector<string> argv;
-};
 
 class httpManager{
     private:
@@ -35,7 +32,7 @@ class httpManager{
         bool makeRegister();
 
         //makes a get request to /getCmd and returns the comand
-        commandInput getComand();
+        vector <string> getComand();
 
         //reports the result of a comand back to server
         void report(const char * report);
@@ -45,6 +42,8 @@ class httpManager{
 
         //downloads file from server and save it locally
         void download(const char *fname);
+
+        void clientOK();
         
 };
 

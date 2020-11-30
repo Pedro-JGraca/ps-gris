@@ -80,12 +80,12 @@ httpManager::makeRegister()
     return false;
 }
 
-commandInput 
+vector <string> 
 httpManager::getComand()
 {
     const char *headers[]={jwtToken.c_str(),nullptr};
     simpleCurl curl;
-    commandInput result;
+    vector <string> result;
     long statusCode;
     string jsonresponse;
     rapidjson::Document d;
@@ -97,7 +97,7 @@ httpManager::getComand()
     if (statusCode==200){
         d.Parse(jsonresponse.c_str());
         for(const auto& value : d["cmd"].GetArray()){
-            result.argv.push_back(value.GetString());
+            result.push_back(value.GetString());
         }
     }
     return result;
@@ -148,4 +148,19 @@ httpManager::download(const char *fname)
 
     fclose(dst);
 
+}
+
+void 
+httpManager::clientOK()
+{
+    cout << "Responder ao servidor" << endl;
+    const char *headers[]={jwtToken.c_str(),"Content-Type: application/json",nullptr};
+    simpleCurl curl;
+    long statusCode;
+
+    string saida = curl_easy_escape(curl.getObject(), "" , 0);
+
+    curl_easy_setopt(curl.getObject(),CURLOPT_POSTFIELDS, saida);
+    
+    curl.simplePerform("/clientOk",&statusCode,headers);
 }

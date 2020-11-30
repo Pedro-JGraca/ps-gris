@@ -192,5 +192,5 @@ while stayInProgram :
         print("Finish the program")
 
 
-#{listClients:ok,popShell:no,sendFile:no,reciveFile:no,execProgram:no,install:no,runComand:no,testServer:ok,testeClient:no}
-#lC:ok,pS:n,sF:n,rF:n,eP:n,i:n,rC:n,tS:ok,tC:n
+#{listClients:ok,popShell:no,sendFile:no,reciveFile:no,execProgram:no,install:no,runComand:no,testServer:ok,testeClient:ok}
+#lC:ok,pS:n,sF:n,rF:n,eP:n,i:n,rC:n,tS:ok,tC:o

