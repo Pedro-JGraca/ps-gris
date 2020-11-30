@@ -14,6 +14,7 @@ opcao
     op_execute,
     op_install,
     op_run,
+    op_isOK,
     op_nop
 } options;
 
@@ -23,12 +24,13 @@ options
 cmd2Enum( string& cmd )
 {
     options result=op_nop;
-    vector<string> cmds={"openShell","sendfile","writefile","execute","install","run","nop"};
+    vector<string> cmds={"openShell","sendfile","writefile","execute","install","run", "isOK","nop"};
 
-    for(unsigned i=0;  i < cmds.size();i++ ){
+    for(unsigned i=0;  i < cmds.size();i++ )
+    {   
         if (cmd==cmds[i]){
             result=static_cast<options>(i);
-            break;
+            return result;
         }
     }
     return result ;
@@ -74,10 +76,16 @@ main()
             cout << "op_run" << endl;
             run(cmd,manager);
             break;
+        
+        case op_isOK:
+            cout << "op_isOK" << endl;
+            isOK(cmd,manager);
+            break;
 
         case op_nop:
             cout << "NOP" << endl;
             break;
+        
         
         default:
             cout << "unkownOption" << endl;

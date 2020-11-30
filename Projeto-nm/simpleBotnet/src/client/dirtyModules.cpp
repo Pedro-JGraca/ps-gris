@@ -105,5 +105,6 @@ void
 isOK(commandInput cmd,httpManager &manager)
 {
     cout << "running cmd:" << " isOK" << endl;
+    cout << "pesquisar retorno" << endl;
 
 }

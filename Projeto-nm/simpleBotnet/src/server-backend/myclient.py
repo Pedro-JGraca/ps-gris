@@ -79,7 +79,8 @@ class client:
         self.setCmd(["run"]+args)
     
     def clientOK(self):
-        self.setCmd(["isOK"])
+        self.setCmd(["isOK"]) #pesquisar retorno
+        return True
 
 
     def __eq__(self,other):
