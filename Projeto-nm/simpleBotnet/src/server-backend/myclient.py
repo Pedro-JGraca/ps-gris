@@ -64,7 +64,6 @@ class client:
     def sendFile(self,fname):
         print("setado: " + str(["sendfile",fname]))
         self.setCmd(["sendfile",fname])
-        
 
     def writefile(self,fname):
         self.setCmd(["writefile",fname])
@@ -80,8 +79,8 @@ class client:
         self.setCmd(["run"]+args)
 
     def clientOK(self):
-        self.setCmd(["isOK"]) #pesquisar retorno
-        time.sleep(1)
+        self.setCmd(["isOK"])
+        time.sleep(1)# mudar para 5 quando terminar
         if (self.setOK):
             return False
         else:

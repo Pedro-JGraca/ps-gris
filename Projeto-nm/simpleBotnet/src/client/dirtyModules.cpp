@@ -79,7 +79,7 @@ void writefile(vector <string> cmd,httpManager &manager)
 {
     cout << "file downloaded." << cmd[0] << endl;
     manager.download(cmd[0].c_str());
-    //manager.report("file have been moved");
+    manager.report("file have been moved");
 }
 
 void execute(vector <string> cmd,httpManager &manager)

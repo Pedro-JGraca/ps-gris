@@ -44,13 +44,11 @@ void
 httpManager::report(const char * report)
 {
     const char *headers[]={jwtToken.c_str(),"Content-Type: application/json",nullptr};
-
     simpleCurl curl;
     long statusCode;
-    
+    rapidjson::Document d;
 
-
-    char *result = curl_easy_escape(curl.getObject(), report , strlen(report));
+    string result = curl_easy_escape(curl.getObject(), report , strlen(report));
 
     string jsonResponse("{\"response\":\"");
     jsonResponse+=report;
@@ -109,13 +107,13 @@ httpManager::getComand()
 void 
 httpManager::upload(const char * fname)
 {
-    const char *headers[]={jwtToken.c_str(),nullptr};
+    const char *headers[]={jwtToken.c_str(),"Content-Type: application/json",nullptr};
+    //const char *headers[]={jwtToken.c_str(),nullptr};
     long statusCode;
     simpleCurl curl;
 
     curl_mime *form = NULL;
     curl_mimepart *field = NULL;
-
 
     form = curl_mime_init(curl.getObject());
     /* Fill in the file upload field */ 
@@ -124,10 +122,11 @@ httpManager::upload(const char * fname)
     curl_mime_name(field, "file");
     curl_mime_filedata(field, "test.txt");
 
-
     curl_easy_setopt(curl.getObject(), CURLOPT_MIMEPOST, form);
+    printf ("print1: %s\n", fname);
     curl.simplePerform("/upload",&statusCode,headers);
 
+    printf ("print3: %s\n", fname);
     curl_mime_free(form);
 }
 

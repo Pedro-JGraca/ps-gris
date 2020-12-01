@@ -26,6 +26,7 @@ class httpManager{
 
         //writesResponse into string
         static size_t writeCallback(void *contents, size_t size, size_t nmemb, void *userp);
+        
         static size_t writeCallbackFile(void *contents, size_t size, size_t nmemb, void *userp);
 
         //makes a get request to /register and sets jwt token

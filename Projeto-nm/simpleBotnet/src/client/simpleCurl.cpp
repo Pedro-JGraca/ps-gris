@@ -48,7 +48,8 @@ simpleCurl::simplePerform(const char * subpath, long *statusCode=nullptr,const c
     curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headerList);
     curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
     curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);
-    curl_easy_setopt(curl, CURLOPT_URL, (SERVER_URL + subpath).c_str() );
+    curl_easy_setopt(curl, CURLOPT_URL, (SERVER_URL + subpath).c_str());
+    
     if (fp!=nullptr){
         curl_easy_setopt(curl, CURLOPT_WRITEDATA,fp);
     }

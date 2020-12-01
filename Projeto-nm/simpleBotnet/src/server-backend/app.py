@@ -50,19 +50,18 @@ def report():
     uid,aproved=requireRegister()
     if not aproved:
         return "Forbidden",403
-
-    print(request)
-    result=request.json["response"]
-    master.report(uid,result)
-    return {"result":"OK"},200
+    #result=request.json["response"] 
+    #master.report(uid,result)
+    return 'ok',200
 
 #simple upload file
 @app.route('/upload', methods=["POST"])
 def upload_file():
+    
     uid,aproved=requireRegister()
     if uid==None:
         return "Forbidden",403
-        
+    print ("entra no upload?")   
     uploaded_file = request.files['file']
     result = master.saveFile(uid,uploaded_file)
     return result
