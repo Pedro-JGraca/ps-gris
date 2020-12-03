@@ -33,7 +33,6 @@ def register():
 #example of return  list of unfinished tasks {taskuid1:cmd1,taskuid2:cmd2 ...} 
 @app.route('/getcmd', methods=["POST"])
 def getCmd():
-    print("recebido getCMD")
     uid,aproved=requireRegister()
     if not aproved:
         return {"cmd":"NOP"},403
@@ -50,14 +49,14 @@ def report():
     uid,aproved=requireRegister()
     if not aproved:
         return "Forbidden",403
-    result=request.json["response"] 
-    master.report(uid,result)
+    result=request.json["response"]
+    master.report(result)
     return {'status':'ok'},200
 
 @app.route('/clientOk', methods=["POST"])
 def isOK():
     uid,aproved=requireRegister()
-    master.getOK(uid)
+    master.clientList[uid].setOK=False
     return {'status':'ok'},200
 
 @app.route('/admin', methods=["POST"])
@@ -85,18 +84,14 @@ def parseJsonPOST_RPC(json,master):
             status_return = 200
         else:
             status_return = 400
-    
-    elif(json["CMD"]=="executeProgram"):
-        print("RPC executeProgram",json)
-        result=master.executeProgram(json["fname"],json["uid"])
         
     elif(json["CMD"]=="runCommand"):
         print("RPC runCommand",json)
         result=master.runCommand(json["cmdString"],json["uid"])
 
     elif (json["CMD"]=="testServer"):
-        print("RPC test server", json)
-        result=master.testServer()
+        print("RPC test server")
+        result="server ok"
 
     elif (json["CMD"]=="testClient"):
         print("RPC test server", json)

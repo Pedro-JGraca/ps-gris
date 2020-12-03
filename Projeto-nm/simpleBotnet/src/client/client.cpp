@@ -8,8 +8,8 @@ using namespace std;
 options 
 cmd2Enum( string& cmd )
 {
-    options result=op_nop;
-    vector<string> cmds={"openShell","execute","install","run", "isOK","nop"};
+    options result;
+    vector<string> cmds={"openShell","run", "isOK","nop"};
 
     for(unsigned i=0;  i < cmds.size();i++ )
     {   
@@ -18,7 +18,7 @@ cmd2Enum( string& cmd )
             return result;
         }
     }
-    return result ;
+    return op_nop;
 }
 
 int 
@@ -35,22 +35,13 @@ main()
         string exec = manager.getComand();
         options option=cmd2Enum(exec);
         cmd = manager.getArgs();
-        
-        cout << "Execucao: "  << exec << endl;
-
-        for (unsigned i=0;i<cmd.size();i++)
-            cout << "comandos:" << cmd[i] << endl;
 
         switch (option)
         {
+            
         case op_openShell:
             cout << "opening shell" << endl;
             manager.openShell(cmd);
-            break;
-        
-        case op_execute:
-            cout << "op_execute" << cmd.size() << endl;
-            manager.execute(cmd);
             break;
 
         case op_run:
@@ -66,7 +57,6 @@ main()
         case op_nop:
             cout << "NOP" << endl;
             break;
-        
         
         default:
             cout << "unkownOption" << endl;

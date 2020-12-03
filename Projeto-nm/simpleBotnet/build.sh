@@ -1,4 +1,4 @@
 #!/bin/sh
 
 bash clean.sh
-bash org.sh
+bash init.sh

@@ -11,22 +11,22 @@ class linker:
         self.arg=[]
 
     def doRequest(self,rote,json,method):
-        #try:
-        addr = self.addr + rote
-        if method=="post":
-            r = requests.post(addr,headers={"x-auth":self.jwtToken},json=json)
-            return [r.json(),r.status_code]
+        try:
+            addr = self.addr + rote
+            if method=="post":
+                r = requests.post(addr,headers={"x-auth":self.jwtToken},json=json)
+                return [r.json(),r.status_code]
 
-        elif method=="get":
-            r=requests.get(addr,headers={"x-auth":self.jwtToken},json=json)
-            return [r.json(),r.status_code]
-        else:
-            print ("[python] method unknown")
-            raise method
+            elif method=="get":
+                r=requests.get(addr,headers={"x-auth":self.jwtToken},json=json)
+                return [r.json(),r.status_code]
+            else:
+                print ("[python] method unknown")
+                raise method
 
-        #except Exception as e:
-        #    print("[python] exception ocurred!",e)
-        #    return False
+        except Exception as e:
+            print("[python] exception ocurred!",e)
+            return False
 
     def makeRegister(self):
 
@@ -69,7 +69,6 @@ class linker:
     
     def report(self,input):
         if (type(input) is str):
-            print("[python] report: " + input)
             json={"response":input} #response é campo do json enviado
             self.doRequest("report",json, "post") #report se refere a rota flask 
         else:

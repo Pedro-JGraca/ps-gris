@@ -11,8 +11,6 @@ typedef enum
 opcao
 {
     op_openShell,
-    op_execute,
-    op_install,
     op_run,
     op_isOK,
     op_nop
@@ -58,13 +56,13 @@ public:
     openShell(vector <string> cmd);
 
     void 
-    execute(vector <string> cmd);
-
-    void 
     run(vector <string> cmd);
 
     void 
     isOK();
+
+    unsigned
+    sizeError(string command);
 
 };
 
