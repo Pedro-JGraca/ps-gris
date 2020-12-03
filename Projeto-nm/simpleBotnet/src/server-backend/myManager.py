@@ -26,8 +26,6 @@ def decodeJwt(token):
 
 class manager:
     def __init__(self):
-        #UID->client
-        #self.new_uid='0'
         self.clientList=collections.OrderedDict()
         
 
@@ -36,12 +34,9 @@ class manager:
 
     def register(self,ip=""):
         new_uid=uuid.uuid4().hex
-
         c=client(new_uid,ip)
         self.clientList[new_uid]=c
         print("registrado",self.clientList)
-        #a = self.new_uid
-        #self.new_uid= str(int(self.new_uid)+1)
         return encodeJwt({"uid":new_uid}),True      
 
     def getCmd(self,uid):
@@ -54,11 +49,6 @@ class manager:
     def report(self,uid,result):
         print("reporting",uid,result)
         self.clientList[uid].report(result) 
-
-    def saveFile(self,uid,file):
-        #TODO makes checks and other stuffs
-        file.save("uploads/"+file.filename)
-        return "Ok",200
 
     def getOK(self,uid):
         self.clientList[uid].setOK=False
@@ -86,24 +76,14 @@ class manager:
         else:
             print("client don't find")
 
-    def sendFile(self,fname,clientuid=0):
-        if (self.getClientByIndex(clientuid)):
-            self.getClientByIndex(clientuid).sendFile(fname)
-        else:
-            print("client don't find")
-
-    def downloadFile(self,fname,clientuid=0):
-        if (self.getClientByIndex(clientuid)):
-            self.getClientByIndex(clientuid).writefile(fname)
-        else:
-            print("client don't find")
-
 
     def executeProgram(self,fname,clientuid=0):
         if (self.getClientByIndex(clientuid)):
             self.getClientByIndex(clientuid).executeProgram(fname)
+            return "resposta"
         else:
             print("client don't find")
+            return "client don't find"
 
     def runCommand(self,cmd,clientuid=0):
         cmdList=[cmd]
@@ -118,10 +98,7 @@ class manager:
     
     def testClient(self,clientuid=0):
         if (self.getClientByIndex(clientuid)):
-            if (self.getClientByIndex(clientuid).clientOK()):
-                return "Client ok"
-            else:
-                return "Client don't ok"
+            return self.getClientByIndex(clientuid).clientOK()
         else:
             return "client don't find"
 

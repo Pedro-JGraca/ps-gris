@@ -1,28 +1,36 @@
 
+from os import error
+from flask import helpers
 import requests
+from requests.api import head
 
 class linker:
     def __init__(self,addr="http://127.0.0.1:8080/"):
         self.jwtToken=""
         self.addr=addr
+        self.arg=[]
 
-    def doRequest(self,rote,json):
-        try:
-            addr = self.addr + rote
-            #precisa colocar o jwtToken no json?
-            r=requests.post(addr,json=json)
+    def doRequest(self,rote,json,method):
+        #try:
+        addr = self.addr + rote
+        if method=="post":
+            r = requests.post(addr,headers={"x-auth":self.jwtToken},json=json)
             return [r.json(),r.status_code]
 
-        except Exception as e:
-            print("[python] exception ocurred!",e)
-            return False
+        elif method=="get":
+            r=requests.get(addr,headers={"x-auth":self.jwtToken},json=json)
+            return [r.json(),r.status_code]
+        else:
+            print ("[python] method unknown")
+            raise method
 
+        #except Exception as e:
+        #    print("[python] exception ocurred!",e)
+        #    return False
 
     def makeRegister(self):
 
-        json = "a"
-
-        Return = self.doRequest("register", json)
+        Return = self.doRequest("register", {"status":"ok"}, "get")
 
         if (Return==False):
             print("[python] register was not made")
@@ -30,8 +38,30 @@ class linker:
         
         elif (Return[1]==200):
             print("[python] register was made")
-            self.jwtToken="x-auth: " + Return[0].json["x-auth"]
+            self.jwtToken=Return[0]["x-auth"]
             return True
+        
+        else:
+            print("[python] Code response Error: " + str(Return[1]))
+            return False
+
+    def getCMD(self):
+        Return = self.doRequest("getcmd", {"status":"ok"} , "post")
+        if (Return==False):
+            print("[python] server not found")
+            return False
+        
+        elif (Return[1]==200):
+            size=len(Return[0]["cmd"])
+            if (size >1):
+                index = 1
+                while (index  < size ):
+                    self.arg.append(Return[0]["cmd"][index])
+                    #print (Return[0]["cmd"][index]) #elemento associado
+                    index +=1
+            c = Return[0]["cmd"][0] #comando do elemento
+            print("[python] cmd found:" + c )
+            return c
         
         else:
             print("[python] Code response Error: " + str(Return[1]))
@@ -39,59 +69,30 @@ class linker:
     
     def report(self,input):
         if (type(input) is str):
-
             print("[python] report: " + input)
             json={"response":input} #response é campo do json enviado
-            self.doRequest("report",json) #report se refere a rota flask 
-
+            self.doRequest("report",json, "post") #report se refere a rota flask 
         else:
             print("[python] The input is not string.")
+    
+    def getArgsSize(self):
+        return len(self.arg)
+    
+    def getArgs(self):
+        saida = self.arg
+        self.arg = []#limpa
+        return saida
         
     def clientOK(self):
         print("[python] responding OK")
-        json = {"status":"ok"}
-        Return = self.doRequest("clientOk",json)
+        Return = self.doRequest("clientOk",{"status":"ok"} ,"post")
+        print("Retorno: " + str(Return))
         if (Return==False):
             print("[python] not responded OK... server not found")
         elif (Return[1]==200):
             print("[python] responded OK")
         else:
             print("[python] not responded OK... server not understend")
-
-    def upload(self,file):
-
-        json = {"file":file}
-
-        Return = self.doRequest("upload",json)
-        if (Return==False):
-            print("[python] not upload... server not found")
-            return False
-        elif (Return[1]==200):
-            print("[python] upload OK")
-            return True
-        else:
-            print("[python] not upload... server not understend")
-            return False
-
-    def download(self,file):
-        try :
-            ref_arquivo = open(str(file),"r")
-            ref_arquivo.close()
-        except:
-            print ("don't find file: " + str(file))
-            return False
-        json = {"download":str(file)}
-
-        Return = self.doRequest("download",json)
-        if (Return==False):
-            print("[python] not download... server not found")
-            return False
-        elif (Return[1]==200):
-            print("[python] download OK")
-            return True
-        else:
-            print("[python] not download... server not understend")
-            return False
 
         
 link=linker()

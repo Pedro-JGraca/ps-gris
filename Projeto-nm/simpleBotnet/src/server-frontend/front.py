@@ -25,14 +25,6 @@ class admin:
         json={"CMD":"abrirShell","uid":uid,"port":str(port),"addr":addr}
         return self.doRequest(json)
 
-    def sendFile(self,fname,uid=0):
-        json={"CMD":"sendFile","uid":uid,"fname":fname}
-        return self.doRequest(json)
-
-    def downloadFile(self,fname,uid=0):
-        json={"CMD":"downloadFile","uid":uid,"fname":fname}
-        return self.doRequest(json)
-
     def executeProgram(self,fname,uid=0):
         json={"CMD":"executeProgram","uid":uid,"fname":fname}
         return self.doRequest(json)

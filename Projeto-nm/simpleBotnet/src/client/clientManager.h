@@ -11,8 +11,6 @@ typedef enum
 opcao
 {
     op_openShell,
-    op_sendfile,
-    op_writefile,
     op_execute,
     op_install,
     op_run,
@@ -34,7 +32,9 @@ private:
     CPyObject pyAdmin;
     CPyObject link;
 
-    void makeRegister();
+    bool ficar = false;
+
+    bool makeRegister();
     
 
 public:
@@ -42,19 +42,29 @@ public:
      clientManager(/* args */);
     ~clientManager();
 
-    vector <string> getComand();
+    string
+    getComand();
 
-    void openShell(vector <string> cmd);
+    void
+    clean();
 
-    void sendfile(vector <string> cmd);
+    vector <string>
+    getArgs();
 
-    void writefile(vector <string> cmd);
+    bool
+    getRegisterMade();
 
-    void execute(vector <string> cmd);
+    void 
+    openShell(vector <string> cmd);
 
-    void run(vector <string> cmd);
+    void 
+    execute(vector <string> cmd);
 
-    void isOK();
+    void 
+    run(vector <string> cmd);
+
+    void 
+    isOK();
 
 };
 

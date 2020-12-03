@@ -1,7 +1,7 @@
 import threading
 import time
 class client:
-    def __init__(self,uid,ip=""):
+    def __init__(self,uid,ip):
         self.uid=uid
         self.ip=ip
         self.cmd=None
@@ -19,13 +19,12 @@ class client:
         self.cvcmd.acquire()
 
         while self.cmd==None:
-        #    time.sleep(1)
             self.cvcmd.wait()
         #consume cmd
         result=self.cmd
         self.lastcmd=result
         self.cmd=None
-        #self.cvcmd.release()
+        self.cvcmd.release()
 
         return result
     
@@ -40,8 +39,6 @@ class client:
         self.cvfile.release()
 
         return result
-
-
 
     def setCmd(self,cmdList):
 
@@ -77,12 +74,16 @@ class client:
 
     def clientOK(self):
         self.setCmd(["isOK"])
+        return self.ouvir()
+
+    def ouvir(self):
+        #enviar comando para falar
         time.sleep(1)# mudar para 5 quando terminar
         if (self.setOK):
-            return False
+            return "Client don't ok"
         else:
             self.setOK=True;
-            return True
+            return "Client ok"
 
 
     def __eq__(self,other):

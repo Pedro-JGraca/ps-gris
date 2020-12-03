@@ -5,6 +5,7 @@ cd src/client
 make
 mv client ../../build/client/
 make clean
+cp link.py ../../build/client/
 cd ..
 
 #build server
