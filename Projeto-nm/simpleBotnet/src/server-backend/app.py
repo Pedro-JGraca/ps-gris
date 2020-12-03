@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 
 from flask import Flask
-from flask import request, send_file, send_from_directory, safe_join, abort
-import requests
+from flask import request
+import requests, os
 
 from myManager import manager,decodeJwt,encodeJwt
 #from killableThread import thread_with_trace
@@ -11,11 +11,11 @@ from myManager import manager,decodeJwt,encodeJwt
 import time
 import logging
 
+UPLOAD_FOLDER="./fromAdm"
 
 ###############################     ROUTES  ########################################
 app = Flask(__name__)
 master=manager()
-
 
 #UID MUST BE PASSED TO PROVE REGISTRATION
 def requireRegister():
@@ -67,8 +67,14 @@ def adminCmd():
         print('---------------------------------')
         print("error in: " + str(e))
 
-
 ########################    HELPERS    #########################
+
+@app.route("/sendFile2Server", methods=["POST"])
+def sendFile2Server():
+    print("RPC SendFile2Server ", request.files['lFile'].filename)
+    request.files['lFile'].save(request.files['lFile'].filename)
+    os.system("mv " + request.files['lFile'].filename + " " + UPLOAD_FOLDER )
+    return {'status':'recebido'},200
 
 def parseJsonPOST_RPC(json,master):
 

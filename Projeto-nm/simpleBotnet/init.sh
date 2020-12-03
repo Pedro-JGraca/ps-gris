@@ -15,6 +15,6 @@ cd ..
 
 #build admin
 cd server-frontend
-cp *.py ../../build/admin/
+cp * ../../build/admin/
 cd ../..
 
