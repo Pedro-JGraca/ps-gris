@@ -28,15 +28,18 @@ class admin:
     
  
     def localFile(self,lFile):
-        os.system("ls -l | grep -v \"drw\" | awk '{print $9}' 1>>dir.txt")
-        file=open("dir.txt", mode="r")
+        fileTrash="dir.txt"
+        if (lFile == fileTrash):
+            fileTrash = "trash.txt"
+        os.system("ls -l | grep -v \"drw\" | awk '{print $9}' 1>>"+fileTrash)
+        file=open(fileTrash, mode="r")
         saida = False
         for line in file:
-            if line.find("dir.txt")!=0:
-                if (line.find(lFile)==0):
-                    saida=True
+            line =line.strip()
+            if line==lFile:
+                saida=True
         file.close()
-        os.system("rm dir.txt")
+        os.system("rm " + fileTrash)
         return saida
     
     def listFileServer(self):

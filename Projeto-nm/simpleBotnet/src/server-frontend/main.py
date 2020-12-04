@@ -5,28 +5,49 @@ import os
 
 stayInProgram=True
 res=False
-commands = ['help','listClients','popShell','runComand', 'testServer', 'testClient','sendFile2Server','receiveFromServer','exit']
+commands = ['help','listClients','popShell','runComand', 'testServer', 'testClient','sendFile2Server','receiveFromServer','fileServer2client','exit']
 
 exit = len(commands) - 1
 
 master=admin()
 
+def lister():
+    listFile = master.listFileServer();
+    print("Available files for download:\n")
+        
+    for i in listFile:
+        print(i)
+
+    sFile = input("\nWhat file? ")
+    error = True
+    for i in listFile:
+        i=i.strip()
+        if (i == sFile):                
+            error = False
+    return sFile,error
+
+
+
+
 while stayInProgram :
     wait = True
     i=0
+
     print("List of commands:\n\n")
     while (i < len(commands) ):
         print (str(i) + " - " + commands[i])
         i+=1
+    print ("\n")
+
     command = exit;
 
     try : 
         command = int(input('Enter the number of command:'))
         if (command<0) or (command>exit):
-            raise command
-    except:
-        print("The input is not validated\n")
-        command = exit
+            raise Exception("The input is not validated\n")
+    except Exception as e:
+        print(e)
+        command = exit        
 
 
     print ("The command selected is: " + commands[command])
@@ -42,7 +63,8 @@ while stayInProgram :
         "5 - testClient: tests the connection on the client machine."  + "\n\n" +
         "6 - sendFile2Server: send file to server."  + "\n\n" +
         "7 - receiveFromServer: recive file solicited from server."  + "\n"
-        "8 - exit: disconnects of the server."  + "\n"
+        "8 - fileServer2client: send file solicited from server for clien machine."  + "\n"
+        "9 - exit: disconnects of the server."  + "\n"
     )
 
     elif (command == 1): #listClients
@@ -123,17 +145,7 @@ while stayInProgram :
     
     elif (command == 7): #receiveFromServer
         try:
-            listFile = master.listFileServer();
-            print("Available files for download:\n")
-        
-            for i in listFile:
-                print(i)
-
-            sFile = input("\nWhat file? ")
-            error = True
-            for i in listFile:
-                if (i.find(sFile)):                        
-                    error = False
+            sFile,error = lister()
 
             if error:
                 raise Exception("file not find")
@@ -141,6 +153,19 @@ while stayInProgram :
             if not(master.receiveFromServer(sFile)):
                 raise Exception("server not find")
 
+        except Exception as e:
+            print(e)
+    
+    elif (command == 8): #fileServer2client
+        try:
+            csFile,error = lister()
+            if error:
+                raise Exception("file not find")
+
+            if not(master.receiveFromServer(csFile)):
+                raise Exception("server not find")
+            else:
+                print('found')
         except Exception as e:
             print(e)
 
