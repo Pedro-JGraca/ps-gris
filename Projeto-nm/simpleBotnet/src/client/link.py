@@ -93,6 +93,13 @@ class linker:
         else:
             print("[python] not responded OK... server not understend")
 
-        
+    def downloadFileFromServer(self,scFile):
+        print("[python] downloding " + scFile)
+        json={"sFile":scFile}
+        addr = self.addr + "/receiveFromServer"
+        r = requests.get(addr,json=json, allow_redirects=True)
+        open(scFile,'wb').write(r.content)
+        return r.status_code==200
+    
 link=linker()
 

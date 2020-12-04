@@ -13,6 +13,7 @@ opcao
     op_openShell,
     op_run,
     op_isOK,
+    op_down_serv,
     op_nop
 } options;
 
@@ -60,6 +61,9 @@ public:
 
     void 
     isOK();
+
+    void
+    downFromServ(vector <string> scFile);
 
     unsigned
     sizeError(string command);

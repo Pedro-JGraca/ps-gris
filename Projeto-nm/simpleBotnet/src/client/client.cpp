@@ -9,10 +9,10 @@ options
 cmd2Enum( string& cmd )
 {
     options result;
-    vector<string> cmds={"openShell","run", "isOK","nop"};
+    vector<string> cmds={"openShell","run", "isOK","downServ","nop"};
 
     for(unsigned i=0;  i < cmds.size();i++ )
-    {   
+    {
         if (cmd==cmds[i]){
             result=static_cast<options>(i);
             return result;
@@ -35,7 +35,6 @@ main()
         string exec = manager.getComand();
         options option=cmd2Enum(exec);
         cmd = manager.getArgs();
-
         switch (option)
         {
             
@@ -53,6 +52,11 @@ main()
             cout << "op_isOK" << endl;
             manager.isOK();
             break;
+        
+        case op_down_serv:
+            cout << "op_down_serv" << endl;
+            manager.downFromServ(cmd);
+            break;
 
         case op_nop:
             cout << "NOP" << endl;
@@ -67,16 +71,16 @@ main()
 }
 
 /*
-    1 : adm -> serv
-    2 : serv -> clt
-    3 : serv <- clt
-    4 : adm <- serv
+    1 : adm -> serv OK
+    2 : serv -> clt DO
+    3 : serv <- clt OK
+    4 : adm <- serv NO
 
-    5 : adm -> clt
+    5 : adm -> clt  NO
             adm -> serv
             serv -> clt
 
-    6 : adm <- clt
+6 : adm <- clt  NO
             serv <- clt
             adm <- serv 
 */

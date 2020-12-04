@@ -162,10 +162,15 @@ while stayInProgram :
             if error:
                 raise Exception("file not find")
 
-            if not(master.receiveFromServer(csFile)):
+            if not (master.displayClients()):
                 raise Exception("server not find")
-            else:
-                print('found')
+            
+            client = int(input("What client?"))
+            print("\n")
+
+            if not(master.fileServer2Client(csFile,client)):
+                raise Exception("server not find")
+                
         except Exception as e:
             print(e)
 

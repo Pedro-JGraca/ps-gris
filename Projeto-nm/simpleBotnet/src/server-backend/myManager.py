@@ -85,6 +85,14 @@ class manager:
         else:
             return "client don't find"
     
+    def fileServer2Client(self,clientuid,csFile):
+        if (self.getClientByIndex(clientuid)):
+            self.getClientByIndex(clientuid).fileServer2Client(csFile)
+            return self.resulter()
+        else:
+            return "client don't find"
+        
+    
     def report(self,input):
         self.ok=True
         self.result = input

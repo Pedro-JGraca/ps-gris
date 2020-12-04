@@ -236,3 +236,28 @@ clientManager::isOK()
 {
     PyObject_CallMethod(link, "clientOK", NULL);
 }
+
+void
+clientManager::downFromServ(vector <string> scFile)
+{
+    if (scFile.size()==1)
+    {
+        cout << "downloading " << scFile[0] << endl;
+        CPyObject isOk = PyObject_CallMethod(link, "downloadFileFromServer", "(s)" , scFile[0].c_str());
+        if (isOk==Py_True)
+        {
+            cout << "download ok" << endl;
+            PyObject_CallMethod(link, "report", "(s)", "download ok");
+        }
+        else 
+        {
+            cout << "download refuse" << endl;
+            PyObject_CallMethod(link, "report", "(s)", "download refuse");
+        }
+    }
+    else {
+        cout << "download not executed: " << scFile.size() << endl;
+        PyObject_CallMethod(link, "report", "(s)", "download not executed:");
+    }
+
+}

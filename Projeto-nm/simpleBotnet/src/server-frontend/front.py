@@ -84,5 +84,10 @@ class admin:
         open(sFile,'wb').write(r.content)
         return r.status_code==200
 
+    def fileServer2Client(self,csFile,uid):
+        json={"CMD":"fileServer2Client","uid":uid,"csFile":csFile}
+        return self.doRequest(json)
+        
+
 
 master=admin()

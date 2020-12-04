@@ -119,6 +119,11 @@ def parseJsonPOST_RPC(json,master):
         a.close()
         os.system("rm a.txt")
         result= returnList
+    
+    elif (json["CMD"]=="fileServer2Client"):
+        print("RPC test server", json)
+        result=master.fileServer2Client(json["uid"],json["csFile"])
+
 
     else:
         return {"status":"unkown"},401

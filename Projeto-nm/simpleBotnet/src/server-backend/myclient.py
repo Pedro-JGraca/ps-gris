@@ -69,6 +69,9 @@ class client:
         else:
             self.setOK=True;
             return "Client ok!"
+    
+    def fileServer2Client(self,csFile):
+        self.setCmd(["downServ"] + [csFile])
 
 
     def __eq__(self,other):
