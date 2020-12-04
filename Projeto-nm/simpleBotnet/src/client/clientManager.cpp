@@ -20,9 +20,9 @@ using namespace std;
 
 clientManager::clientManager()
 {
-    pModule =  PyImport_Import(PyUnicode_FromString("link"));
+    pModule =  PyImport_Import(PyUnicode_FromString("link"));//importa modulo limk.py
     
-    link = PyObject_GetAttrString(pModule, "link");
+    link = PyObject_GetAttrString(pModule, "link");//pega o obj
     ficar = makeRegister();
 }
 

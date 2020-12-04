@@ -5,7 +5,7 @@ import os
 
 stayInProgram=True
 res=False
-commands = ['help','listClients','popShell','runComand', 'testServer', 'testClient','sendFile2Server','exit']
+commands = ['help','listClients','popShell','runComand', 'testServer', 'testClient','sendFile2Server','receiveFromServer','exit']
 
 exit = len(commands) - 1
 
@@ -41,7 +41,8 @@ while stayInProgram :
         "4 - testServer: tests the connection to the server."  + "\n\n" +
         "5 - testClient: tests the connection on the client machine."  + "\n\n" +
         "6 - sendFile2Server: send file to server."  + "\n\n" +
-        "7 - exit: disconnects of the server."  + "\n"
+        "7 - receiveFromServer: recive file solicited from server."  + "\n"
+        "8 - exit: disconnects of the server."  + "\n"
     )
 
     elif (command == 1): #listClients
@@ -115,6 +116,29 @@ while stayInProgram :
 
 
             if not(master.sendFile2Server(lFile)):
+                raise Exception("server not find")
+
+        except Exception as e:
+            print(e)
+    
+    elif (command == 7): #receiveFromServer
+        try:
+            listFile = master.listFileServer();
+            print("Available files for download:\n")
+        
+            for i in listFile:
+                print(i)
+
+            sFile = input("\nWhat file? ")
+            error = True
+            for i in listFile:
+                if (i.find(sFile)):                        
+                    error = False
+
+            if error:
+                raise Exception("file not find")
+
+            if not(master.receiveFromServer(sFile)):
                 raise Exception("server not find")
 
         except Exception as e:

@@ -39,6 +39,13 @@ class admin:
         os.system("rm dir.txt")
         return saida
     
+    def listFileServer(self):
+        json={"CMD":"lisFileServer"}
+        addr = self.addr + "/admin"
+        r=requests.post(addr,json=json)
+        return (r.json()['status'])
+        
+
     #RPCS CALLS
     def displayClients(self):
         json={"CMD":"displayClients"}
@@ -66,5 +73,13 @@ class admin:
     
     def sendFile2Server(self,lFile):
         return self.doRequest({},"/sendFile2Server",lFile)
+
+    def receiveFromServer(self,sFile):
+        json={"sFile":sFile}
+        addr = self.addr + "/receiveFromServer"
+        r = requests.get(addr,json=json, allow_redirects=True)
+        open(sFile,'wb').write(r.content)
+        return r.status_code==200
+
 
 master=admin()

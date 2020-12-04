@@ -2,6 +2,7 @@
 
 from flask import Flask
 from flask import request
+from flask.helpers import send_from_directory
 import requests, os
 
 from myManager import manager,decodeJwt,encodeJwt
@@ -11,7 +12,7 @@ from myManager import manager,decodeJwt,encodeJwt
 import time
 import logging
 
-UPLOAD_FOLDER="./fromAdm"
+FOLDER="local"
 
 ###############################     ROUTES  ########################################
 app = Flask(__name__)
@@ -73,8 +74,14 @@ def adminCmd():
 def sendFile2Server():
     print("RPC SendFile2Server ", request.files['lFile'].filename)
     request.files['lFile'].save(request.files['lFile'].filename)
-    os.system("mv " + request.files['lFile'].filename + " " + UPLOAD_FOLDER )
+    os.system("mv " + request.files['lFile'].filename + " " + FOLDER )
     return {'status':'recebido'},200
+
+@app.route("/receiveFromServer", methods=["GET","POST"])
+def receiveFromServer():
+    cmd = request.json['sFile']
+    return send_from_directory(directory=FOLDER, filename=cmd, as_attachment=True)
+
 
 def parseJsonPOST_RPC(json,master):
 
@@ -102,7 +109,17 @@ def parseJsonPOST_RPC(json,master):
     elif (json["CMD"]=="testClient"):
         print("RPC test server", json)
         result=master.testClient(json["uid"])
-    
+
+    elif (json["CMD"]=="lisFileServer"):
+        os.system("ls " + FOLDER +  " 1>>a.txt")
+        a = open("a.txt")
+        returnList = []
+        for line in a:
+            returnList.append(line)
+        a.close()
+        os.system("rm a.txt")
+        result= returnList
+
     else:
         return {"status":"unkown"},401
     
