@@ -1,11 +1,16 @@
 #!/bin/sh
 
+rm -rf build/client/*
+rm -rf build/server/*
+rm -rf build/admin/*
+
 #builds client
 cd src/client
 make
 mv client ../../build/client/
 make clean
 cp link.py ../../build/client/
+cp serverLink.txt ../../build/client/
 cd ..
 
 #build server
