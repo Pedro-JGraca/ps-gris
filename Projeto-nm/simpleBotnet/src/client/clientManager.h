@@ -14,6 +14,7 @@ opcao
     op_run,
     op_isOK,
     op_down_serv,
+    op_up_serv,
     op_nop
 } options;
 
@@ -64,6 +65,9 @@ public:
 
     void
     downFromServ(vector <string> scFile);
+
+    void
+    upForServe(vector <string> csFile);
 
     unsigned
     sizeError(string command);

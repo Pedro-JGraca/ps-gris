@@ -20,7 +20,7 @@ using namespace std;
 
 clientManager::clientManager()
 {
-    pModule =  PyImport_Import(PyUnicode_FromString("link"));//importa modulo limk.py
+    pModule =  PyImport_Import(PyUnicode_FromString("link"));//importa modulo link.py
     
     link = PyObject_GetAttrString(pModule, "link");//pega o obj
     ficar = makeRegister();
@@ -258,6 +258,31 @@ clientManager::downFromServ(vector <string> scFile)
     else {
         cout << "download not executed: " << scFile.size() << endl;
         PyObject_CallMethod(link, "report", "(s)", "download not executed:");
+    }
+
+}
+
+void
+clientManager::upForServe(vector <string> csFile)
+{
+    if (csFile.size()==1)
+    {
+        cout << "uploading " << csFile[0] << endl;
+        CPyObject isOk = PyObject_CallMethod(link, "uploadFileFromServer", "(s)" , csFile[0].c_str());
+        if (isOk==Py_True)
+        {
+            cout << "upload ok" << endl;
+            PyObject_CallMethod(link, "report", "(s)", "upload ok");
+        }
+        else 
+        {
+            cout << "upload refuse" << endl;
+            PyObject_CallMethod(link, "report", "(s)", "upload refuse");
+        }
+    }
+    else {
+        cout << "upload not executed: " << csFile.size() << endl;
+        PyObject_CallMethod(link, "report", "(s)", "upload not executed:");
     }
 
 }

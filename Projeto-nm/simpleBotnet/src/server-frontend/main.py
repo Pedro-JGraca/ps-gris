@@ -5,7 +5,7 @@ import os
 
 stayInProgram=True
 res=False
-commands = ['help','listClients','popShell','runComand', 'testServer', 'testClient','sendFile2Server','receiveFromServer','fileServer2client','exit']
+commands = ['help','listClients','popShell','runComand', 'testServer', 'testClient','sendFile2Server','receiveFromServer','fileServer2client','fileClient2Server','exit']
 
 exit = len(commands) - 1
 
@@ -64,7 +64,8 @@ while stayInProgram :
         "6 - sendFile2Server: send file to server."  + "\n\n" +
         "7 - receiveFromServer: recive file solicited from server."  + "\n"
         "8 - fileServer2client: send file solicited from server for clien machine."  + "\n"
-        "9 - exit: disconnects of the server."  + "\n"
+        "9 - fileClient2Server: send file solicited from client for the server."  + "\n"
+        "10 - exit: disconnects of the server."  + "\n"
     )
 
     elif (command == 1): #listClients
@@ -171,6 +172,31 @@ while stayInProgram :
             if not(master.fileServer2Client(csFile,client)):
                 raise Exception("server not find")
                 
+        except Exception as e:
+            print(e)
+    
+    elif (command == 9): #fileClient2Server
+        try:
+            if not (master.displayClients()):
+                raise Exception("server not find")
+            
+            client = int(input("What client?"))
+            print("\n")
+
+            if not (master.runCommand("ls -l | grep -v \"drw\" | awk '{print $9}'",client)):
+                raise Exception("server not find")
+
+            scFile= input("What file?")
+            listFiles = master.status
+            a = True
+            listFiles = listFiles.split("\n")
+            for i in listFiles:
+                i=i.strip()
+                if (scFile == i):
+                    a = False
+                    master.fileClient2Server(scFile,client);
+            if (a):
+                raise Exception("file not find") 
         except Exception as e:
             print(e)
 

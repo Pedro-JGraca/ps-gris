@@ -7,6 +7,7 @@ from requests.api import head
 class admin:
     def __init__(self):
         file=open("serverLink.txt", mode="r")
+        self.status=[]
         for line in file:
             self.addr = line
         file.close()
@@ -20,6 +21,8 @@ class admin:
                 with open (file,'rb') as f:
                     r=requests.post(addr,headers={},files={"lFile":f})
             print(r.json()['status'])
+            self.status = r.json()['status']
+
             return (r.status_code==200)
         except Exception as e:
             print("exception ocurred!",e)
@@ -47,7 +50,6 @@ class admin:
         addr = self.addr + "/admin"
         r=requests.post(addr,json=json)
         return (r.json()['status'])
-        
 
     #RPCS CALLS
     def displayClients(self):
@@ -87,7 +89,9 @@ class admin:
     def fileServer2Client(self,csFile,uid):
         json={"CMD":"fileServer2Client","uid":uid,"csFile":csFile}
         return self.doRequest(json)
-        
 
+    def fileClient2Server(self,scFile,uid):
+        json={"CMD":"fileClient2Server","uid":uid,"scFile":scFile}
+        return self.doRequest(json)
 
 master=admin()

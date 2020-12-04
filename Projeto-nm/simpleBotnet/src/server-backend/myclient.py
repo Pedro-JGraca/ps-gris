@@ -73,6 +73,9 @@ class client:
     def fileServer2Client(self,csFile):
         self.setCmd(["downServ"] + [csFile])
 
+    def fileClient2Server(self,scFile):
+        self.setCmd(["upServ"] + [scFile])
+
 
     def __eq__(self,other):
         return self.uid==other.uid

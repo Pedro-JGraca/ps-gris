@@ -95,11 +95,25 @@ class linker:
 
     def downloadFileFromServer(self,scFile):
         print("[python] downloding " + scFile)
-        json={"sFile":scFile}
-        addr = self.addr + "/receiveFromServer"
-        r = requests.get(addr,json=json, allow_redirects=True)
-        open(scFile,'wb').write(r.content)
-        return r.status_code==200
+        try : 
+            json={"sFile":scFile}
+            addr = self.addr + "/receiveFromServer"
+            r = requests.get(addr,json=json, allow_redirects=True)
+            open(scFile,'wb').write(r.content)
+            return r.status_code==200
+        
+        except Exception as e:
+            print("error: " + str(e))
+            return False;
     
+    def downloadFileFromServer(self,csFile):
+        try : 
+            print("[python] uploading " + csFile)
+            r = requests.post(self.addr + "/sendFile2Server",files={'lFile':open(csFile,'rb')}, allow_redirects=True)
+            return r.status_code==200
+            
+        except Exception as e:
+            print("error: " + str(e))
+            return False;
 link=linker()
 
