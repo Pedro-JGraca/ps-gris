@@ -27,18 +27,6 @@ class client:
         self.cvcmd.release()
 
         return result
-    
-    def getFile(self):
-        self.cvfile.acquire()
-
-        while self.file==None:
-            self.cvfile.wait()
-        #consume file
-        result=self.file
-        self.file=None
-        self.cvfile.release()
-
-        return result
 
     def setCmd(self,cmdList):
 
@@ -47,13 +35,6 @@ class client:
         self.cmd=cmdList
         self.cvcmd.notify() #acorda wait, fazendo o get pegar o comando
         self.cvcmd.release()
-
-    def setFile(self,fname):
-        self.cvfile.acquire()
-        #produce item
-        self.file=fname
-        self.cvfile.notify()
-        self.cvfile.release()
 
     def openShell(self,addr,port):
         self.setCmd(["openShell",addr,port])

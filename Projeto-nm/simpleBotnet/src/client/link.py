@@ -98,7 +98,7 @@ class linker:
         try : 
             json={"sFile":scFile}
             addr = self.addr + "/receiveFromServer"
-            r = requests.get(addr,json=json, allow_redirects=True)
+            r = requests.get(addr,json=json,headers={"x-auth":self.jwtToken}, allow_redirects=True)
             open(scFile,'wb').write(r.content)
             return r.status_code==200
         
@@ -109,7 +109,7 @@ class linker:
     def uploadFileFromServer(self,csFile):
         try : 
             print("[python] uploading " + csFile)
-            r = requests.post(self.addr + "/sendFile2Server",files={'lFile':open(csFile,'rb')}, allow_redirects=True)
+            r = requests.post(self.addr + "/sendFile2Server",files={'lFile':open(csFile,'rb')},headers={"x-auth":self.jwtToken}, allow_redirects=True)
             return r.status_code==200
             
         except Exception as e:

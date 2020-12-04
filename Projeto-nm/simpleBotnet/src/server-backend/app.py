@@ -3,7 +3,7 @@
 from flask import Flask
 from flask import request
 from flask.helpers import send_from_directory
-import requests, os
+import os,sys
 
 from myManager import manager,decodeJwt,encodeJwt
 #from killableThread import thread_with_trace
@@ -16,7 +16,8 @@ FOLDER="local"
 
 ###############################     ROUTES  ########################################
 app = Flask(__name__)
-master=manager()
+master=manager(sys.argv[1])
+
 
 #UID MUST BE PASSED TO PROVE REGISTRATION
 def requireRegister():
@@ -63,26 +64,57 @@ def isOK():
 @app.route('/admin', methods=["POST"])
 def adminCmd():
     try:
-        print(request.json)
-        return parseJsonPOST_RPC(request.json,master)
+        if (master.passwordCorrect(request.headers.get('x-passwd'))):
+            return parseJsonPOST_RPC(request.json,master)
+        else:
+            return {"status":"incorrect password"}
     except Exception as e:
         print('---------------------------------')
         print("error in: " + str(e))
 
 ########################    HELPERS    #########################
 
-@app.route("/sendFile2Server", methods=["POST"])
+@app.route("/sendFile2Server", methods=["POST"])   #insegura
 def sendFile2Server():
-    print("RPC SendFile2Server ", request.files['lFile'].filename)
-    request.files['lFile'].save(request.files['lFile'].filename)
-    os.system("mv " + request.files['lFile'].filename + " " + FOLDER )
-    return {'status':'recebido'},200
+    passwdServer = request.headers.get('x-passwd')
+    passwdClient = request.headers.get('x-auth')
+    isValid=False
+    if (passwdServer!=None):
+        if (master.passwordCorrect(request.headers.get('x-passwd'))):
+            isValid = True
+        else:
+            return {"status":"incorrect password"}
+    elif (passwdClient!=None):
+        uid,isValid=requireRegister()
+    else:
+        isValid=False
+    if (isValid):
+        print("RPC SendFile2Server ", request.files['lFile'].filename)
+        request.files['lFile'].save(request.files['lFile'].filename)
+        os.system("mv " + request.files['lFile'].filename + " " + FOLDER )
+        return {'status':'recebido'},200
+    else:
+        return {'status':'notValid'},200
 
 @app.route("/receiveFromServer", methods=["GET","POST"])
-def receiveFromServer():
-    cmd = request.json['sFile']
-    return send_from_directory(directory=FOLDER, filename=cmd, as_attachment=True)
-
+def receiveFromServer(): 
+    passwdServer = request.headers.get('x-passwd')
+    passwdClient = request.headers.get('x-auth')
+    isValid=False
+    if (passwdServer!=None):
+        if (master.passwordCorrect(request.headers.get('x-passwd'))):
+            isValid = True
+        else:
+            return {"status":"incorrect password"}
+    elif (passwdClient!=None):
+        uid,isValid=requireRegister()
+    else:
+        isValid=False
+    if (isValid):
+        cmd = request.json['sFile']
+        return send_from_directory(directory=FOLDER, filename=cmd, as_attachment=True)
+    else:
+        return {'status':'notValid'},200
 
 def parseJsonPOST_RPC(json,master):
 

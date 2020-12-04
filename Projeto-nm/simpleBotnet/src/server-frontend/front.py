@@ -1,13 +1,15 @@
 #!/usr/bin/python3
+import hashlib
 import requests
 import os
 
 from requests.api import head
 
 class admin:
-    def __init__(self):
+    def __init__(self,password):
         file=open("serverLink.txt", mode="r")
         self.status=[]
+        self.password = hashlib.sha512( str(password).encode("utf-8") ).hexdigest()
         for line in file:
             self.addr = line
         file.close()
@@ -16,10 +18,10 @@ class admin:
         addr = self.addr +  rote
         try:
             if (file == ""):
-                r=requests.post(addr,json=json)
+                r=requests.post(addr,headers={"x-passwd":self.password},json=json)
             else:
                 with open (file,'rb') as f:
-                    r=requests.post(addr,headers={},files={"lFile":f})
+                    r=requests.post(addr,headers={"x-passwd":self.password},files={"lFile":f})
             print(r.json()['status'])
             self.status = r.json()['status']
 
@@ -27,8 +29,6 @@ class admin:
         except Exception as e:
             print("exception ocurred!",e)
             return False
-
-    
  
     def localFile(self,lFile):
         fileTrash="dir.txt"
@@ -48,7 +48,7 @@ class admin:
     def listFileServer(self):
         json={"CMD":"lisFileServer"}
         addr = self.addr + "/admin"
-        r=requests.post(addr,json=json)
+        r=requests.post(addr,headers={"x-passwd":self.password},json=json)
         return (r.json()['status'])
 
     #RPCS CALLS
@@ -82,7 +82,7 @@ class admin:
     def receiveFromServer(self,sFile):
         json={"sFile":sFile}
         addr = self.addr + "/receiveFromServer"
-        r = requests.get(addr,json=json, allow_redirects=True)
+        r = requests.get(addr,json=json,headers={"x-passwd":self.password}, allow_redirects=True)
         open(sFile,'wb').write(r.content)
         return r.status_code==200
 
@@ -97,5 +97,3 @@ class admin:
     def runCommandInServer(self, cmd):
         json={"CMD":"runComandLocal","cmdL":cmd}
         return self.doRequest(json)
-
-master=admin()

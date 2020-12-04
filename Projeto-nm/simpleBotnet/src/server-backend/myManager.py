@@ -7,9 +7,8 @@ import base64
 import collections
 from threading import Thread
 from myclient import client
-import logging
-import sys 
 
+import hashlib
 
 MAX_LEN_JOB=10
 JWT_SECRET="secret"
@@ -25,28 +24,30 @@ def decodeJwt(token):
         return None,False
 
 class manager:
-    def __init__(self):
+    def __init__(self,passwd):
         self.clientList=collections.OrderedDict()
         self.result = ""
         self.ok = False
-    
+        self.password = self.password= hashlib.sha512( str(passwd).encode("utf-8") ).hexdigest()
+
     def getClients(self):
         return self.clientList
+    
+    def passwordCorrect(self,hash):
+        if (hash == self.password):
+            return True
+        else:
+            return False
 
     def register(self,ip=""):
         new_uid=uuid.uuid4().hex
         c=client(new_uid,ip)
         self.clientList[new_uid]=c
         print("registrado",self.clientList)
-        return encodeJwt({"uid":new_uid}),True      
+        return encodeJwt({"uid":new_uid}),True
 
     def getCmd(self,uid):
         return self.clientList[uid].getCmd()
-        
-    def getFile(self,uid):
-        print("getting gui",self.clientList[uid])
-        return self.clientList[uid].getFile()
-
 
     ########################## actions RPC ############################
     def getClientByIndex(self,clientUid):

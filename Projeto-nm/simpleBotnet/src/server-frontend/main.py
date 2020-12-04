@@ -9,7 +9,10 @@ commands = ['help','listClients','popShell','runComand', 'testServer', 'testClie
 
 exit = len(commands) - 1
 
-master=admin()
+password = input ("What is the password?")
+
+master=admin(password)
+
 
 def lister():
     listFile = master.listFileServer();
@@ -25,8 +28,6 @@ def lister():
         if (i == sFile):                
             error = False
     return sFile,error
-
-
 
 
 while stayInProgram :
