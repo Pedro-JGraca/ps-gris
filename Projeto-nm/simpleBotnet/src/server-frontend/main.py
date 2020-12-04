@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 from front import admin
-import os
+import time,os
 
 
 stayInProgram=True
 res=False
-commands = ['help','listClients','popShell','runComand', 'testServer', 'testClient','sendFile2Server','receiveFromServer','fileServer2client','fileClient2Server','exit']
+commands = ['help','listClients','popShell','runComand', 'testServer', 'testClient','sendFile2Server','receiveFromServer','fileServer2client','fileClient2Server','runComandinServer',"sendFile2Client","uploadFileFromClient",'exit']
 
 exit = len(commands) - 1
 
@@ -65,7 +65,10 @@ while stayInProgram :
         "7 - receiveFromServer: recive file solicited from server."  + "\n"
         "8 - fileServer2client: send file solicited from server for clien machine."  + "\n"
         "9 - fileClient2Server: send file solicited from client for the server."  + "\n"
-        "10 - exit: disconnects of the server."  + "\n"
+        "10 - runComandinServer: send file for client for the server."  + "\n"
+        "11 - sendFile2Client: send file for client."  + "\n"
+        "12 - downlFileFromClient: receive file from client."  + "\n"
+        "13 - exit: disconnects of the server."  + "\n"
     )
 
     elif (command == 1): #listClients
@@ -130,7 +133,7 @@ while stayInProgram :
         except Exception as e:
             print(e)
     
-    elif (command == 6): #sendFile2Server
+    elif (command == 6): #sendFile2Server ## adm -> serv
         try:
             os.system("ls -l | grep -v \"drw\" | awk '{print $9}'")
             lFile = input("\nWhat file? ")
@@ -144,7 +147,7 @@ while stayInProgram :
         except Exception as e:
             print(e)
     
-    elif (command == 7): #receiveFromServer
+    elif (command == 7): #receiveFromServer ## adm <- serv
         try:
             sFile,error = lister()
 
@@ -157,7 +160,7 @@ while stayInProgram :
         except Exception as e:
             print(e)
     
-    elif (command == 8): #fileServer2client
+    elif (command == 8): #fileServer2client ## serv -> client
         try:
             csFile,error = lister()
             if error:
@@ -175,7 +178,7 @@ while stayInProgram :
         except Exception as e:
             print(e)
     
-    elif (command == 9): #fileClient2Server
+    elif (command == 9): #fileClient2Server   ## serv <- client
         try:
             if not (master.displayClients()):
                 raise Exception("server not find")
@@ -197,6 +200,74 @@ while stayInProgram :
                     master.fileClient2Server(scFile,client);
             if (a):
                 raise Exception("file not find") 
+        except Exception as e:
+            print(e)
+    
+    elif (command == 10):#runComandinServer
+        
+        cmd = input("What command?")
+        if not(master.runCommandInServer(cmd)):
+                raise Exception("server not find or don't understand")
+
+
+    elif (command == 11):#sendFile2Client   #adm -> client
+        try:
+            if not (master.displayClients()):
+                raise Exception("server not find")
+            
+            client = int(input("What client?"))
+            print("\n")
+
+            os.system("ls -l | grep -v \"drw\" | awk '{print $9}'")
+            lFile = input("\nWhat file? ")
+            if not(master.localFile(lFile)):
+                raise  Exception("file not find")
+
+            if not(master.sendFile2Server(lFile)):
+                    raise Exception("server not find")
+            
+            time.sleep(1)
+            
+            if not(master.fileServer2Client(lFile,client)):
+                raise Exception("server not find")
+
+            if not(master.runCommandInServer("rm " + "./local/" + lFile )):
+                raise Exception("server not find")
+            
+        except Exception as e:
+            print(e)
+    
+    elif (command == 12):#uploadFileFromClient #adm <- client
+        try:
+            if not (master.displayClients()):
+                raise Exception("server not find")
+            
+            client = int(input("What client?"))
+            print("\n")
+
+            if not (master.runCommand("ls -l | grep -v \"drw\" | awk '{print $9}'",client)):
+                raise Exception("server not find")
+
+            lFile = input("\nWhat file? ")
+            listFiles = master.status
+            a = True
+            listFiles = listFiles.split("\n")
+            for i in listFiles:
+                i=i.strip()
+                if (lFile == i):
+                    a = False
+                    master.fileClient2Server(lFile,client); # serv <- client
+            if (a):
+                raise Exception("file not find") 
+            
+            time.sleep(1)
+            
+            if not(master.receiveFromServer(lFile)):  # adm <- serv
+                raise Exception("server not find")
+
+            if not(master.runCommandInServer("rm " + "./local/" + lFile )):
+                raise Exception("server not find")
+
         except Exception as e:
             print(e)
 

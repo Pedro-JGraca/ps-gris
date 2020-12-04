@@ -63,6 +63,7 @@ def isOK():
 @app.route('/admin', methods=["POST"])
 def adminCmd():
     try:
+        print(request.json)
         return parseJsonPOST_RPC(request.json,master)
     except Exception as e:
         print('---------------------------------')
@@ -127,6 +128,20 @@ def parseJsonPOST_RPC(json,master):
     elif (json["CMD"]=="fileClient2Server"):
         print("RPC file Client 2 Server", json)
         result=master.fileClient2Server(json["uid"],json["scFile"])
+    
+    elif (json["CMD"]=="runComandLocal"):
+        print("RPC runComandLocal", json)
+        if (os.system(json["cmdL"] + " 1>>.print.txt")==0):
+            r = open(".print.txt") 
+            result = ""               
+            for line in r:
+                result+=line
+            r.close()
+            os.system("rm .print.txt")
+
+        else:
+            result = "comand not executed"
+            os.system("rm .print.txt")
 
     else:
         return {"status":"unkown"},401

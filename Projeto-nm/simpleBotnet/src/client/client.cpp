@@ -60,7 +60,7 @@ main()
 
         case op_up_serv:
             cout << "op_up_serv" << endl;
-            manager.downFromServ(cmd);
+            manager.upForServe(cmd);
             break;
 
         case op_nop:

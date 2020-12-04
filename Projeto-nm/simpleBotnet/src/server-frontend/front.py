@@ -94,4 +94,8 @@ class admin:
         json={"CMD":"fileClient2Server","uid":uid,"scFile":scFile}
         return self.doRequest(json)
 
+    def runCommandInServer(self, cmd):
+        json={"CMD":"runComandLocal","cmdL":cmd}
+        return self.doRequest(json)
+
 master=admin()

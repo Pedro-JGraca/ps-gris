@@ -106,7 +106,7 @@ class linker:
             print("error: " + str(e))
             return False;
     
-    def downloadFileFromServer(self,csFile):
+    def uploadFileFromServer(self,csFile):
         try : 
             print("[python] uploading " + csFile)
             r = requests.post(self.addr + "/sendFile2Server",files={'lFile':open(csFile,'rb')}, allow_redirects=True)
