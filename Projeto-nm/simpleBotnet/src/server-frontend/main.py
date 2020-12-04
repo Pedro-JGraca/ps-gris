@@ -55,13 +55,13 @@ while stayInProgram :
     if (command == 0): #help
         print (
         "\n\nThe program is an administrator of several computers that act as clients of the server where that program is run."  + "\n\n" +
-        "0 - help: describe the program and the commands of program " "\n\n" +
-        "1 - listClients: list full clients." + "\n\n" + 
-        "2 - popShell: runs a reverse shell." + "\n\n" + 
-        "3 - runComand: run a command on the client machine."  + "\n\n" +
-        "4 - testServer: tests the connection to the server."  + "\n\n" +
-        "5 - testClient: tests the connection on the client machine."  + "\n\n" +
-        "6 - sendFile2Server: send file to server."  + "\n\n" +
+        "0 - help: describe the program and the commands of program " "\n" +
+        "1 - listClients: list full clients." + "\n" + 
+        "2 - popShell: runs a reverse shell." + "\n" + 
+        "3 - runComand: run a command on the client machine."  + "\n" +
+        "4 - testServer: tests the connection to the server."  + "\n" +
+        "5 - testClient: tests the connection on the client machine."  + "\n" +
+        "6 - sendFile2Server: send file to server."  + "\n" +
         "7 - receiveFromServer: recive file solicited from server."  + "\n"
         "8 - fileServer2client: send file solicited from server for clien machine."  + "\n"
         "9 - fileClient2Server: send file solicited from client for the server."  + "\n"
@@ -209,6 +209,13 @@ while stayInProgram :
         if not(master.runCommandInServer(cmd)):
                 raise Exception("server not find or don't understand")
 
+#adm -> clt
+#   adm -> serv
+#   serv -> clt
+
+#adm <- clt
+#   serv <- clt
+#   adm <- serv 
 
     elif (command == 11):#sendFile2Client   #adm -> client
         try:
@@ -285,7 +292,4 @@ while stayInProgram :
     else:
         print("Finish the program")
 
-#{listClients:ok,popShell:ok,execProgram:no,runComand:ok,testServer:ok,testeClient:ok}
-#lC:ok,pS:ok,eP:n,rC:ok,tS:ok,tC:ok
-
-#falta apenas senha para o adm e enviar e receber arquivos
+#falta  1: limpar vazão de arquivos 2: colocar senha para o adm 3: verificar condições de erros

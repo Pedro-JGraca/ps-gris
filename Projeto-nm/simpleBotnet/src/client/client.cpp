@@ -74,18 +74,3 @@ main()
 
     }
 }
-
-/*
-    1 : adm -> serv OK
-    2 : serv -> clt OK
-    3 : serv <- clt OK
-    4 : adm <- serv OK
-
-    5 : adm -> clt  NO
-            adm -> serv
-            serv -> clt
-
-    6 : adm <- clt  NO
-            serv <- clt
-            adm <- serv 
-*/

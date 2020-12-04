@@ -160,17 +160,17 @@ clientManager::run(vector <string> cmd)//runCommand
         cmd[0]+=" 2>>error.txt";
 
         FILE* pipe = popen(cmd[0].c_str(), "r");
+        if (!pipe)
+        {
+            PyObject_CallMethod(link, "report", "(s)", "file was not sent");
+            cout << "file was not sent" << endl;
 
+        }
         if (sizeError(cmd[0])!=0)
         {
             pclose(pipe);
             pipe = fopen("error.txt", "r");
             erro = true;
-        }
-        if (!pipe)
-        {
-            PyObject_CallMethod(link, "report", "(s)", "file was not sent");
-            cout << "file was not sent" << endl;
         }
         else 
         {
@@ -206,8 +206,7 @@ clientManager::run(vector <string> cmd)//runCommand
 unsigned
 clientManager::sizeError(string command)
 {
-    system((command += " 1>>a.txt ").c_str());
-    system("rm a.txt");
+    system((command += " 1>>/dev/null ").c_str());
     FILE *A =  fopen("error.txt","r");
     unsigned size=0;
     char buffer[128];
