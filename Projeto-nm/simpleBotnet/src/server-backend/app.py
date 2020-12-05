@@ -74,7 +74,7 @@ def adminCmd():
 
 ########################    HELPERS    #########################
 
-@app.route("/sendFile2Server", methods=["POST"])   #insegura
+@app.route("/sendFile2Server", methods=["POST"])
 def sendFile2Server():
     passwdServer = request.headers.get('x-passwd')
     passwdClient = request.headers.get('x-auth')

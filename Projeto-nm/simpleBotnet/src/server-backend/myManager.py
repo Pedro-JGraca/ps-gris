@@ -28,7 +28,7 @@ class manager:
         self.clientList=collections.OrderedDict()
         self.result = ""
         self.ok = False
-        self.password = self.password= hashlib.sha512( str(passwd).encode("utf-8") ).hexdigest()
+        self.password= hashlib.sha512( str(passwd).encode("utf-8") ).hexdigest()
 
     def getClients(self):
         return self.clientList
