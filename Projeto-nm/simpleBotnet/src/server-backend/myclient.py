@@ -9,7 +9,7 @@ class client:
         self.file=None
         self.cvcmd = threading.Condition()
         self.cvfile = threading.Condition()
-        self.setOK = True;
+        self.setOK = True;444444444444444
 
     def report(self,result):
         print("Chegou o result: " + result)
